@@ -16,12 +16,12 @@ class PhotosCollectionViewController: UICollectionViewController {
     
     private let reuseIdentifier = "PicCell"
     private let sectionIdentifier = "SecHeader"
-    private let seguePhotoView = "showPhotoView"
+    //private let seguePhotoView = "showPhotoView"
+    private let photoVCID = "PhotoViewController"
     
     private let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
     
     private var flickrResponses = [FlickrResponse]()
-    
     
     
     func photoForIndexPath(indexPath:NSIndexPath) -> FlickrPhoto? {
@@ -63,10 +63,8 @@ class PhotosCollectionViewController: UICollectionViewController {
     
     override func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
         
-        //TODO:- open the photo view controller
-        if let flickerPhoto = photoForIndexPath(indexPath) {
-            performSegueWithIdentifier(seguePhotoView, sender: flickerPhoto)
-        }
+        //performSegueWithIdentifier(seguePhotoView, sender: indexPath)
+        openPhotoView(indexPath)
         
         return false
     }
@@ -101,20 +99,35 @@ class PhotosCollectionViewController: UICollectionViewController {
         return UICollectionReusableView()
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let segueId = segue.identifier where segueId == seguePhotoView {
-            if let fPhoto = sender as? FlickrPhoto {
-            let photoVC = segue.destinationViewController as! PhotoViewController
+    func openPhotoView(indexPath:NSIndexPath) {
+        if let fPhoto = photoForIndexPath(indexPath) {
+            if let photoVC = self.storyboard?.instantiateViewControllerWithIdentifier(photoVCID) as? PhotoViewController {
                 photoVC.navigationItem.title = fPhoto.title
+                //photoVC.imageView.image = fPhoto.thumbnail
+                photoVC.thumbnail = fPhoto.thumbnail
+                photoVC.largeImage = fPhoto.largeImage
                 photoVC.view.showLoadingView()
                 FlickrDataManager.downloadImageAsync(fPhoto, size: Constants.FlickrPhotoSize.Big.rawValue, callback: { (image) in
                     fPhoto.largeImage = image
                     photoVC.imageView.image = fPhoto.largeImage
                     photoVC.view.removeLoadingView()
                 })
+                
+                if let cv = self.collectionView {
+                    if let atrb = cv.layoutAttributesForItemAtIndexPath(indexPath) {
+                        let cellRect = atrb.frame
+                        let cellFrameInSuperView = self.collectionView!.convertRect(cellRect, toView: cv.superview)
+                        
+                        photoVC.zoomAnimator.originFrame = cellFrameInSuperView
+                        
+                    }
+                }
+                
+                self.presentViewController(photoVC, animated: true, completion: nil)
             }
         }
     }
+    
     
     override func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         self.searchField.resignFirstResponder()

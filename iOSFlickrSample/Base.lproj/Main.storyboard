@@ -41,7 +41,6 @@
                                 </constraints>
                                 <connections>
                                     <outlet property="imageView" destination="eCG-Lj-yj5" id="fX5-Bq-XZ0"/>
-                                    <segue destination="6VA-rS-O7y" kind="show" identifier="showPhotoView" id="YJQ-7M-asG"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -50,7 +49,7 @@
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lh9-x7-GqN">
-                                    <rect key="frame" x="121.5" y="5.5" width="77.5" height="38.5"/>
+                                    <rect key="frame" x="122" y="6" width="77" height="38"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="32"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
@@ -104,7 +103,7 @@
         <!--Photo View Controller-->
         <scene sceneID="OM9-3P-X5f">
             <objects>
-                <viewController id="6VA-rS-O7y" customClass="PhotoViewController" customModule="iOSFlickrSample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PhotoViewController" id="6VA-rS-O7y" customClass="PhotoViewController" customModule="iOSFlickrSample" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="29e-iw-LkM"/>
                         <viewControllerLayoutGuide type="bottom" id="eyn-MJ-Eur"/>
@@ -113,8 +112,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iDs-QV-Nju">
+                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iDs-QV-Nju">
                                 <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                                <gestureRecognizers/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
