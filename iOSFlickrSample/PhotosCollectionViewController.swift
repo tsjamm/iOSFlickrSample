@@ -39,8 +39,9 @@ class PhotosCollectionViewController: UICollectionViewController {
         guard let searchTerm = self.searchField.text where searchTerm != ""  else {
             return
         }
+        self.searchField.resignFirstResponder()
         self.view.showLoadingView()
-        DataManager.fetchFlickerData(searchTerm) { (fResponse) in
+        FlickrDataManager.fetchFlickerData(searchTerm) { (fResponse) in
             self.flickrResponses.insert(fResponse, atIndex: 0)
             if let cView = self.collectionView {
                 cView.reloadData()
@@ -107,7 +108,7 @@ class PhotosCollectionViewController: UICollectionViewController {
                 photoVC.view.showLoadingView()
                 let backgroundQueue = dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)
                 dispatch_async(backgroundQueue, {
-                    DataManager.downloadLargeImage(fPhoto)
+                    FlickrDataManager.downloadLargeImage(fPhoto)
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         photoVC.imageView.image = fPhoto.largeImage
                         photoVC.view.removeLoadingView()
@@ -116,6 +117,10 @@ class PhotosCollectionViewController: UICollectionViewController {
                 
             }
         }
+    }
+    
+    override func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        self.searchField.resignFirstResponder()
     }
 }
 

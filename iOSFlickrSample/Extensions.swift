@@ -10,7 +10,9 @@ import Foundation
 
 // This File Contains common extensions for addition functionality
 
+
 var LoadingViewAssociatedObjectHandle: UInt8 = 0
+/// This is for Loading View (Small black square with activity indicator
 extension UIView {
     
     var loadingView:UIView? {
@@ -29,14 +31,17 @@ extension UIView {
             let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
             activityIndicator.startAnimating()
             let boxHalfSide = CGFloat(24)
+            let boxSide = 2*boxHalfSide
             let centerX = self.frame.width/2
             let centerY = self.frame.height/2
-            let frame = CGRectMake(centerX - boxHalfSide, centerY - boxHalfSide, boxHalfSide*2, boxHalfSide*2)
+            let frame = CGRectMake(centerX - boxHalfSide, centerY - boxHalfSide, boxSide, boxSide)
             let lView = UIView(frame: frame)
             lView.layer.cornerRadius = 6.0
-            activityIndicator.frame = CGRectMake(0, 0, boxHalfSide*2, boxHalfSide*2)
+            activityIndicator.frame = CGRectMake(0, 0, boxSide, boxSide)
             lView.addSubview(activityIndicator)
             lView.backgroundColor = UIColor.blackColor()
+            lView.clipsToBounds = true
+            lView.autoresizesSubviews = true
             self.loadingView = lView
             self.addSubview(lView)
         }
@@ -45,6 +50,23 @@ extension UIView {
     func removeLoadingView() {
         if let lV = self.loadingView {
             lV.removeFromSuperview()
+        }
+    }
+}
+
+
+/// This is for animating a view
+extension UIView {
+    
+    func animateToFrame(newFrame:CGRect, callback:(()->())) {
+        
+        UIView.animateWithDuration(0.4, animations: {
+            self.frame = newFrame
+            
+            }) { (animationComplete) in
+                if animationComplete {
+                    callback()
+                }
         }
     }
     

@@ -6,8 +6,7 @@
 //  Copyright © 2016 tsjamm. All rights reserved.
 //
 
-import UIKit
-
+/// This is the photo cell in the collection view
 class FlickrPhotoCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!

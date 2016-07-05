@@ -1,5 +1,5 @@
 //
-//  DataManager.swift
+//  FlickrDataManager.swift
 //  iOSFlickrSample
 //
 //  Created by Sai Teja Jammalamadaka on 7/4/16.
@@ -9,7 +9,7 @@
 import Foundation
 
 /// This manages the Flickr Data Fetching Part
-class DataManager {
+class FlickrDataManager {
     
     static func fetchFlickerData(searchTerm:String, callback:((FlickrResponse)->())) {
         guard let flickrURL = flickrSearchURL(searchTerm) else {
@@ -85,10 +85,6 @@ class DataManager {
         
     }
     
-    static func downloadLargeImage(flickerPhoto:FlickrPhoto) {
-        flickerPhoto.largeImage = downloadImage(flickerPhoto, size: Constants.FlickrPhotoSize.Big.rawValue)
-    }
-    
     private static func downloadImages(flickrResponse:FlickrResponse) {
         for photo in flickrResponse.photo {
             photo.thumbnail = downloadImage(photo, size: Constants.FlickrPhotoSize.Small.rawValue)
@@ -96,6 +92,12 @@ class DataManager {
             //photo.largeImage = downloadImage(photo, size: "b")
         }
     }
+    
+    static func downloadLargeImage(flickerPhoto:FlickrPhoto) {
+        flickerPhoto.largeImage = downloadImage(flickerPhoto, size: Constants.FlickrPhotoSize.Big.rawValue)
+    }
+    
+    
     private static func downloadImage(flickrPhoto:FlickrPhoto, size:String) -> UIImage? {
         if let flickrThumbURL = flickrPhotoURL(flickrPhoto, size: size) {
             if let imageData = NSData(contentsOfURL: flickrThumbURL) {
