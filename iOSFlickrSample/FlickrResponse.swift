@@ -17,6 +17,8 @@ class FlickrResponse {
     
     var photo = [FlickrPhoto]()
     
+    var searchTerm:String = ""
+    
     init(dataMap:[String:AnyObject]) {
         self.page = dataMap["page"] as? Int
         self.pages = dataMap["pages"] as? Int

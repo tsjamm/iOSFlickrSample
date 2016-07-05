@@ -15,7 +15,9 @@ class PhotosCollectionViewController: UICollectionViewController {
     @IBOutlet weak var searchField: UITextField!
     
     private let reuseIdentifier = "PicCell"
+    private let sectionIdentifier = "SecHeader"
     private let seguePhotoView = "showPhotoView"
+    
     private let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
     
     private var flickrResponses = [FlickrResponse]()
@@ -86,11 +88,22 @@ class PhotosCollectionViewController: UICollectionViewController {
         return cell
     }
     
+    override func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+        switch kind {
+            case UICollectionElementKindSectionHeader:
+                let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: self.sectionIdentifier, forIndexPath: indexPath) as! FlickrSectionHeaderView
+                headerView.headerLabel.text = flickrResponses[indexPath.section].searchTerm
+                return headerView
+            default: NSLog("Error: Other Supplementary View (not header, so not expected)")
+        }
+        return UICollectionReusableView()
+    }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let segueId = segue.identifier where segueId == seguePhotoView {
             if let fPhoto = sender as? FlickrPhoto {
             let photoVC = segue.destinationViewController as! PhotoViewController
+                photoVC.navigationItem.title = fPhoto.title
                 photoVC.view.showLoadingView()
                 let backgroundQueue = dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)
                 dispatch_async(backgroundQueue, {
@@ -100,6 +113,7 @@ class PhotosCollectionViewController: UICollectionViewController {
                         photoVC.view.removeLoadingView()
                     })
                 })
+                
             }
         }
     }

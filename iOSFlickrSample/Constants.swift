@@ -12,4 +12,10 @@ import UIKit
 struct Constants {
     
     static let flickrAPIKey = "eb69f553cdd8643c5a136e712742757e"
+    
+    enum FlickrPhotoSize:String {
+        case Small = "s"
+        case Medium = "m"
+        case Big = "b"
+    }
 }

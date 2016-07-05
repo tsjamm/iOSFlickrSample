@@ -23,6 +23,7 @@ class DataManager {
             } else {
                 NSLog("\nResponse: \(response)\nResponseObj: \(responseObj)")
                 if let fResponse = processFlickrResponseObject(responseObj) {
+                    fResponse.searchTerm = searchTerm
                     callback(fResponse)
                 }
             }
@@ -85,12 +86,12 @@ class DataManager {
     }
     
     static func downloadLargeImage(flickerPhoto:FlickrPhoto) {
-        flickerPhoto.largeImage = downloadImage(flickerPhoto, size: "b")
+        flickerPhoto.largeImage = downloadImage(flickerPhoto, size: Constants.FlickrPhotoSize.Big.rawValue)
     }
     
     private static func downloadImages(flickrResponse:FlickrResponse) {
         for photo in flickrResponse.photo {
-            photo.thumbnail = downloadImage(photo, size: "s")
+            photo.thumbnail = downloadImage(photo, size: Constants.FlickrPhotoSize.Small.rawValue)
             //photo.mediumImage = downloadImage(photo, size: "m")
             //photo.largeImage = downloadImage(photo, size: "b")
         }
