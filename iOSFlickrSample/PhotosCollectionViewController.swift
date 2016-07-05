@@ -58,6 +58,7 @@ class PhotosCollectionViewController: UICollectionViewController {
         if let cView = self.collectionView {
             cView.reloadData()
         }
+        self.searchField.text = ""
     }
     
     override func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -106,15 +107,11 @@ class PhotosCollectionViewController: UICollectionViewController {
             let photoVC = segue.destinationViewController as! PhotoViewController
                 photoVC.navigationItem.title = fPhoto.title
                 photoVC.view.showLoadingView()
-                let backgroundQueue = dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)
-                dispatch_async(backgroundQueue, {
-                    FlickrDataManager.downloadLargeImage(fPhoto)
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        photoVC.imageView.image = fPhoto.largeImage
-                        photoVC.view.removeLoadingView()
-                    })
+                FlickrDataManager.downloadImageAsync(fPhoto, size: Constants.FlickrPhotoSize.Big.rawValue, callback: { (image) in
+                    fPhoto.largeImage = image
+                    photoVC.imageView.image = fPhoto.largeImage
+                    photoVC.view.removeLoadingView()
                 })
-                
             }
         }
     }

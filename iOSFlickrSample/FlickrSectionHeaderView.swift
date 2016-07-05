@@ -6,6 +6,8 @@
 //  Copyright © 2016 tsjamm. All rights reserved.
 //
 
+import UIKit
+
 /// The header section for the collection view
 class FlickrSectionHeaderView: UICollectionReusableView {
     

@@ -6,11 +6,11 @@
 //  Copyright © 2016 tsjamm. All rights reserved.
 //
 
+import UIKit
 
 /// The photo view controller that shows the big image for a thumbnail
 class PhotoViewController: UIViewController {
 
     @IBOutlet weak var imageView: UIImageView!
-    
     
 }

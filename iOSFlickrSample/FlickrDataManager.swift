@@ -6,7 +6,10 @@
 //  Copyright © 2016 tsjamm. All rights reserved.
 //
 
+import UIKit
 import Foundation
+import Alamofire
+import AlamofireImage
 
 /// This manages the Flickr Data Fetching Part
 class FlickrDataManager {
@@ -17,41 +20,17 @@ class FlickrDataManager {
             return
         }
         
-        doDataWithTask(flickrURL) { (response, responseObj, error) in
-            if (error != nil) {
-                NSLog("Error: Data Task completion returned error =\n\(error)")
-            } else {
-                NSLog("\nResponse: \(response)\nResponseObj: \(responseObj)")
-                if let fResponse = processFlickrResponseObject(responseObj) {
-                    fResponse.searchTerm = searchTerm
-                    callback(fResponse)
-                }
+        getJSONResult(flickrURL.absoluteString) { (response) in
+            if let fResponse = processFlickrResponseObject(response.result.value) {
+                fResponse.searchTerm = searchTerm
+                callback(fResponse)
             }
         }
         
     }
     
-    private static func doDataWithTask(url:NSURL, callback:((NSURLResponse, AnyObject?, NSError?)->())) {
-        let config = NSURLSessionConfiguration.defaultSessionConfiguration()
-        let manager = AFURLSessionManager(sessionConfiguration: config)
-        
-        let request = NSURLRequest(URL: url)
-        
-        let dataTask = manager.dataTaskWithRequest(request) { (response, responseObj, error) in
-            callback(response, responseObj, error)
-        }
-        dataTask.resume()
-    }
-    
-    private static func flickrPhotoURL(flickrPhoto:FlickrPhoto, size:String="s") -> NSURL? {
-        guard let farm = flickrPhoto.farm else { return nil }
-        guard let server = flickrPhoto.server else { return nil }
-        guard let photoID = flickrPhoto.id else { return nil }
-        guard let secret = flickrPhoto.secret else { return nil }
-        
-        let urlString = "https://farm\(farm).staticflickr.com/\(server)/\(photoID)_\(secret)_\(size).jpg"
-        NSLog("photo url = \(urlString)")
-        return NSURL(string: urlString)!
+    private static func getJSONResult(url:String, queryParams:[String:String]?=nil, callback:((response:Response<AnyObject, NSError>)->())) {
+        Alamofire.request(.GET, url, parameters: queryParams).responseJSON(completionHandler: callback)
     }
     
     
@@ -99,7 +78,7 @@ class FlickrDataManager {
     
     
     private static func downloadImage(flickrPhoto:FlickrPhoto, size:String) -> UIImage? {
-        if let flickrThumbURL = flickrPhotoURL(flickrPhoto, size: size) {
+        if let flickrThumbURL = flickrPhoto.getImageUrl(size) {
             if let imageData = NSData(contentsOfURL: flickrThumbURL) {
                 return UIImage(data: imageData)
             } else {
@@ -109,5 +88,15 @@ class FlickrDataManager {
             NSLog("Error: Flickr Image URL not correct.")
         }
         return nil
+    }
+    
+    static func downloadImageAsync(flickrPhoto:FlickrPhoto, size:String, callback:((image:UIImage)->())) {
+        if let flickLargeURL = flickrPhoto.getImageUrl(Constants.FlickrPhotoSize.Big.rawValue) {
+            Alamofire.request(.GET, flickLargeURL).responseImage(completionHandler: { (response) in
+                if let image = response.result.value {
+                    callback(image: image)
+                }
+            })
+        }
     }
 }
