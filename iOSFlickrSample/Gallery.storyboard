@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--Gallery View Controller-->
+        <scene sceneID="6zL-3t-VZq">
+            <objects>
+                <collectionViewController storyboardIdentifier="GalleryViewController" id="FXH-U3-pvC" customClass="GalleryViewController" customModule="iOSFlickrSample" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="8II-Y9-gfc">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="nWS-Re-sSt">
+                            <size key="itemSize" width="200" height="200"/>
+                            <size key="headerReferenceSize" width="50" height="50"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PicCell" id="Dhj-iK-d5v" customClass="FlickrPhotoCell" customModule="iOSFlickrSample" customModuleProvider="target">
+                                <rect key="frame" x="60" y="50" width="200" height="200"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fC3-Cq-q1k">
+                                            <rect key="frame" x="5" y="5" width="190" height="190"/>
+                                        </imageView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <constraints>
+                                    <constraint firstItem="fC3-Cq-q1k" firstAttribute="leading" secondItem="Dhj-iK-d5v" secondAttribute="leading" constant="5" id="DoA-io-SiY"/>
+                                    <constraint firstAttribute="trailing" secondItem="fC3-Cq-q1k" secondAttribute="trailing" constant="5" id="OFj-vk-Nar"/>
+                                    <constraint firstAttribute="bottom" secondItem="fC3-Cq-q1k" secondAttribute="bottom" constant="5" id="gyX-mi-AsQ"/>
+                                    <constraint firstItem="fC3-Cq-q1k" firstAttribute="top" secondItem="Dhj-iK-d5v" secondAttribute="top" constant="5" id="k9J-OJ-3Uz"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="imageView" destination="fC3-Cq-q1k" id="Gda-xq-fjz"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SecHeader" id="T5W-6U-PZk" customClass="FlickrSectionHeaderView" customModule="iOSFlickrSample" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cdO-e1-wF7">
+                                    <rect key="frame" x="122" y="6" width="77" height="38"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="K01-an-UGP">
+                                    <rect key="frame" x="0.0" y="7" width="37" height="37"/>
+                                </activityIndicatorView>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.3002825798" colorSpace="deviceWhite"/>
+                            <constraints>
+                                <constraint firstItem="cdO-e1-wF7" firstAttribute="centerY" secondItem="T5W-6U-PZk" secondAttribute="centerY" id="GbL-KD-967"/>
+                                <constraint firstItem="K01-an-UGP" firstAttribute="centerY" secondItem="T5W-6U-PZk" secondAttribute="centerY" id="KQI-1c-Kow"/>
+                                <constraint firstItem="K01-an-UGP" firstAttribute="leading" secondItem="T5W-6U-PZk" secondAttribute="leading" id="SmC-MM-xPv"/>
+                                <constraint firstItem="cdO-e1-wF7" firstAttribute="centerX" secondItem="T5W-6U-PZk" secondAttribute="centerX" id="Wuh-Vm-Pbh"/>
+                            </constraints>
+                            <connections>
+                                <outlet property="activityIndicator" destination="K01-an-UGP" id="Bos-yq-dmL"/>
+                                <outlet property="headerLabel" destination="cdO-e1-wF7" id="o5B-Cc-bQQ"/>
+                            </connections>
+                        </collectionReusableView>
+                        <connections>
+                            <outlet property="dataSource" destination="FXH-U3-pvC" id="8sC-Ad-HPC"/>
+                            <outlet property="delegate" destination="FXH-U3-pvC" id="8pw-80-raB"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" id="aDG-6g-Z7W">
+                        <nil key="title"/>
+                        <barButtonItem key="leftBarButtonItem" title="Clear" id="9hd-CW-6k7">
+                            <connections>
+                                <action selector="onClearTap:" destination="FXH-U3-pvC" id="OKN-u2-Du0"/>
+                            </connections>
+                        </barButtonItem>
+                        <textField key="titleView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search Flickr" textAlignment="natural" minimumFontSize="17" id="mtb-tW-RrB">
+                            <rect key="frame" x="55" y="7" width="197" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="FXH-U3-pvC" id="sB0-I6-QG5"/>
+                            </connections>
+                        </textField>
+                        <barButtonItem key="rightBarButtonItem" title="Search" id="hDl-l1-79d">
+                            <connections>
+                                <action selector="onSearchTap:" destination="FXH-U3-pvC" id="E67-x8-AHl"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="searchField" destination="mtb-tW-RrB" id="emB-tH-GSV"/>
+                    </connections>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4Xi-hJ-8fM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1819" y="590"/>
+        </scene>
+    </scenes>
+</document>

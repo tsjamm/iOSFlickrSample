@@ -18,6 +18,7 @@ class FlickrResponse {
     var photo = [FlickrPhoto]()
     
     var searchTerm:String = ""
+    var isCached:Bool = false
     
     init(dataMap:[String:AnyObject]) {
         self.page = dataMap["page"] as? Int

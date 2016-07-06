@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--Photo View Controller-->
+        <scene sceneID="0vZ-LJ-vsH">
+            <objects>
+                <viewController storyboardIdentifier="PhotoViewController" id="e9O-Yd-kdP" customClass="PhotoViewController" customModule="iOSFlickrSample" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="K9I-Mh-ArK"/>
+                        <viewControllerLayoutGuide type="bottom" id="B1d-DE-pPc"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ZU9-lw-tc8">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WDs-qt-g69">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                                <gestureRecognizers/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="WDs-qt-g69" secondAttribute="trailing" id="clB-kp-qrs"/>
+                            <constraint firstItem="WDs-qt-g69" firstAttribute="top" secondItem="K9I-Mh-ArK" secondAttribute="bottom" id="ilB-Bk-pdL"/>
+                            <constraint firstItem="WDs-qt-g69" firstAttribute="leading" secondItem="ZU9-lw-tc8" secondAttribute="leading" id="p0s-pk-3YI"/>
+                            <constraint firstItem="B1d-DE-pPc" firstAttribute="top" secondItem="WDs-qt-g69" secondAttribute="bottom" id="vbD-uc-7k5"/>
+                        </constraints>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="imageView" destination="WDs-qt-g69" id="4zc-19-l3S"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bz3-Va-Zr1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2317" y="590"/>
+        </scene>
+    </scenes>
+</document>

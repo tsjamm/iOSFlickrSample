@@ -12,4 +12,5 @@ import UIKit
 class FlickrSectionHeaderView: UICollectionReusableView {
     
     @IBOutlet weak var headerLabel: UILabel!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 }

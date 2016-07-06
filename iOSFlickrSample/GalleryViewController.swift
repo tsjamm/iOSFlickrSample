@@ -1,5 +1,5 @@
 //
-//  PhotosCollectionViewController.swift
+//  GalleryViewController.swift
 //  iOSFlickrSample
 //
 //  Created by Sai Teja Jammalamadaka on 7/4/16.
@@ -10,30 +10,17 @@ import UIKit
 
 
 /// The Collection View Controller that displays the photos fetched from Flickr
-class PhotosCollectionViewController: UICollectionViewController {
+class GalleryViewController: UICollectionViewController {
     
     @IBOutlet weak var searchField: UITextField!
     
     private let reuseIdentifier = "PicCell"
     private let sectionIdentifier = "SecHeader"
     //private let seguePhotoView = "showPhotoView"
-    private let photoVCID = "PhotoViewController"
+    
     
     private let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
     
-    private var flickrResponses = [FlickrResponse]()
-    
-    
-    func photoForIndexPath(indexPath:NSIndexPath) -> FlickrPhoto? {
-        let section = indexPath.section
-        let row = indexPath.row
-        let fResponse = flickrResponses[section]
-        let fResponsePhotoList = fResponse.photo
-        if fResponsePhotoList.count > row {
-            return fResponse.photo[row]
-        }
-        return nil
-    }
     
     func doSearch() {
         guard let searchTerm = self.searchField.text where searchTerm != ""  else {
@@ -41,12 +28,13 @@ class PhotosCollectionViewController: UICollectionViewController {
         }
         self.searchField.resignFirstResponder()
         self.view.showLoadingView()
-        FlickrDataManager.fetchFlickerData(searchTerm) { (fResponse) in
-            self.flickrResponses.insert(fResponse, atIndex: 0)
-            if let cView = self.collectionView {
-                cView.reloadData()
-            }
-            self.view.removeLoadingView()
+        GalleryManager.fetchFlickrData(searchTerm) {
+            dispatch_async(dispatch_get_main_queue(), { 
+                if let cView = self.collectionView {
+                    cView.reloadData()
+                }
+                self.view.removeLoadingView()
+            })
         }
     }
     
@@ -54,17 +42,20 @@ class PhotosCollectionViewController: UICollectionViewController {
         doSearch()
     }
     @IBAction func onClearTap(sender: AnyObject) {
-        self.flickrResponses.removeAll()
-        if let cView = self.collectionView {
-            cView.reloadData()
+        GalleryManager.clearFlickrData { 
+            if let cView = self.collectionView {
+                cView.reloadData()
+            }
+            self.searchField.text = ""
         }
-        self.searchField.text = ""
     }
     
     override func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
         
         //performSegueWithIdentifier(seguePhotoView, sender: indexPath)
-        openPhotoView(indexPath)
+        //openPhotoView(indexPath)
+        
+        GalleryManager.openPhotoView(indexPath, presentingVC: self, zoomOriginFrame: getRelativeCellFrameInSuperView(indexPath))
         
         return false
     }
@@ -72,19 +63,19 @@ class PhotosCollectionViewController: UICollectionViewController {
     
     /// DataSource methods are in this extension, the protocol does not need to be explicitly added.
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return flickrResponses.count
+        return GalleryManager.getNumberOfSearches()
     }
     
     /// DataSource methods are in this extension, the protocol does not need to be explicitly added.
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return flickrResponses[section].photo.count
+        return GalleryManager.getNumberOfPhotos(section)
     }
     
     /// DataSource methods are in this extension, the protocol does not need to be explicitly added.
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! FlickrPhotoCell
         cell.backgroundColor = UIColor.grayColor()
-        cell.imageView.image = photoForIndexPath(indexPath)?.thumbnail
+        cell.imageView.image = GalleryManager.getFlickrPhotoForIndexPath(indexPath)?.thumbnail
         return cell
     }
     
@@ -92,45 +83,34 @@ class PhotosCollectionViewController: UICollectionViewController {
         switch kind {
             case UICollectionElementKindSectionHeader:
                 let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: self.sectionIdentifier, forIndexPath: indexPath) as! FlickrSectionHeaderView
-                headerView.headerLabel.text = flickrResponses[indexPath.section].searchTerm
+                let fReponse = GalleryManager.getFlickrResponseForIndexPath(indexPath)
+                headerView.headerLabel.text = fReponse.searchTerm
+                if fReponse.isCached {
+                    headerView.activityIndicator.startAnimating()
+                } else {
+                    headerView.activityIndicator.stopAnimating()
+                }
                 return headerView
             default: NSLog("Error: Other Supplementary View (not header, so not expected)")
         }
         return UICollectionReusableView()
     }
     
-    func openPhotoView(indexPath:NSIndexPath) {
-        if let fPhoto = photoForIndexPath(indexPath) {
-            if let photoVC = self.storyboard?.instantiateViewControllerWithIdentifier(photoVCID) as? PhotoViewController {
-                photoVC.navigationItem.title = fPhoto.title
-                //photoVC.imageView.image = fPhoto.thumbnail
-                photoVC.thumbnail = fPhoto.thumbnail
-                photoVC.largeImage = fPhoto.largeImage
-                photoVC.view.showLoadingView()
-                FlickrDataManager.downloadImageAsync(fPhoto, size: Constants.FlickrPhotoSize.Big.rawValue, callback: { (image) in
-                    fPhoto.largeImage = image
-                    photoVC.imageView.image = fPhoto.largeImage
-                    photoVC.view.removeLoadingView()
-                })
-                
-                if let cv = self.collectionView {
-                    if let atrb = cv.layoutAttributesForItemAtIndexPath(indexPath) {
-                        let cellRect = atrb.frame
-                        let cellFrameInSuperView = self.collectionView!.convertRect(cellRect, toView: cv.superview)
-                        
-                        photoVC.zoomAnimator.originFrame = cellFrameInSuperView
-                        
-                    }
-                }
-                
-                self.presentViewController(photoVC, animated: true, completion: nil)
-            }
-        }
-    }
-    
-    
     override func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         self.searchField.resignFirstResponder()
+    }
+    
+    func getRelativeCellFrameInSuperView(indexPath:NSIndexPath) -> CGRect? {
+        if let cv = self.collectionView {
+            if let atrb = cv.layoutAttributesForItemAtIndexPath(indexPath) {
+                let cellRect = atrb.frame
+                let cellFrameInSuperView = self.collectionView!.convertRect(cellRect, toView: cv.superview)
+                
+                return cellFrameInSuperView
+                
+            }
+        }
+        return nil
     }
 }
 
@@ -138,7 +118,7 @@ class PhotosCollectionViewController: UICollectionViewController {
 
 
 /// The delegate for the search field
-extension PhotosCollectionViewController:UITextFieldDelegate {
+extension GalleryViewController:UITextFieldDelegate {
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         doSearch()
         return true
@@ -147,10 +127,10 @@ extension PhotosCollectionViewController:UITextFieldDelegate {
 
 
 /// The Collection Flow Layout methods are in this extension
-extension PhotosCollectionViewController: UICollectionViewDelegateFlowLayout {
+extension GalleryViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        guard let fPhoto = photoForIndexPath(indexPath) else {
+        guard let fPhoto = GalleryManager.getFlickrPhotoForIndexPath(indexPath) else {
             NSLog("Error: No Photo for index path \(indexPath)")
             return CGSizeMake(100, 100)
         }

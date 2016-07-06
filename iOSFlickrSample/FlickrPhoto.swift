@@ -37,14 +37,4 @@ class FlickrPhoto {
         
     }
     
-    func getImageUrl(size:String=Constants.FlickrPhotoSize.Small.rawValue) -> NSURL? {
-        guard let farm = self.farm else { return nil }
-        guard let server = self.server else { return nil }
-        guard let photoID = self.id else { return nil }
-        guard let secret = self.secret else { return nil }
-        
-        let urlString = "https://farm\(farm).staticflickr.com/\(server)/\(photoID)_\(secret)_\(size).jpg"
-        NSLog("photo url = \(urlString)")
-        return NSURL(string: urlString)
-    }
 }

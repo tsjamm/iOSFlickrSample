@@ -14,23 +14,32 @@ import AlamofireImage
 /// This manages the Flickr Data Fetching Part
 class FlickrDataManager {
     
+    static var flickrReponseMap = [String:FlickrResponse]()
+    
     static func fetchFlickerData(searchTerm:String, callback:((FlickrResponse)->())) {
         guard let flickrURL = flickrSearchURL(searchTerm) else {
             NSLog("Error: Flickr URL not correct.")
             return
         }
         
+        if let cachedResponse = flickrReponseMap[searchTerm] {
+            cachedResponse.isCached = true
+            callback(cachedResponse)
+        }
+        
         getJSONResult(flickrURL.absoluteString) { (response) in
             if let fResponse = processFlickrResponseObject(response.result.value) {
                 fResponse.searchTerm = searchTerm
+                flickrReponseMap[searchTerm] = fResponse
                 callback(fResponse)
+                
             }
         }
         
     }
     
     private static func getJSONResult(url:String, queryParams:[String:String]?=nil, callback:((response:Response<AnyObject, NSError>)->())) {
-        Alamofire.request(.GET, url, parameters: queryParams).responseJSON(completionHandler: callback)
+        Alamofire.request(.GET, url, parameters: queryParams).responseJSON(queue: dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), completionHandler: callback)
     }
     
     
@@ -76,9 +85,18 @@ class FlickrDataManager {
         flickerPhoto.largeImage = downloadImage(flickerPhoto, size: Constants.FlickrPhotoSize.Big.rawValue)
     }
     
+    static func getFlickrImageUrl(flickrPhoto:FlickrPhoto, size:String=Constants.FlickrPhotoSize.Small.rawValue) -> NSURL? {
+        guard let farm = flickrPhoto.farm else { return nil }
+        guard let server = flickrPhoto.server else { return nil }
+        guard let photoID = flickrPhoto.id else { return nil }
+        guard let secret = flickrPhoto.secret else { return nil }
+        
+        let urlString = "https://farm\(farm).staticflickr.com/\(server)/\(photoID)_\(secret)_\(size).jpg"
+        return NSURL(string: urlString)
+    }
     
     private static func downloadImage(flickrPhoto:FlickrPhoto, size:String) -> UIImage? {
-        if let flickrThumbURL = flickrPhoto.getImageUrl(size) {
+        if let flickrThumbURL = getFlickrImageUrl(flickrPhoto, size:size) {
             if let imageData = NSData(contentsOfURL: flickrThumbURL) {
                 return UIImage(data: imageData)
             } else {
@@ -91,7 +109,7 @@ class FlickrDataManager {
     }
     
     static func downloadImageAsync(flickrPhoto:FlickrPhoto, size:String, callback:((image:UIImage)->())) {
-        if let flickLargeURL = flickrPhoto.getImageUrl(Constants.FlickrPhotoSize.Big.rawValue) {
+        if let flickLargeURL = getFlickrImageUrl(flickrPhoto, size:Constants.FlickrPhotoSize.Big.rawValue) {
             Alamofire.request(.GET, flickLargeURL).responseImage(completionHandler: { (response) in
                 if let image = response.result.value {
                     callback(image: image)

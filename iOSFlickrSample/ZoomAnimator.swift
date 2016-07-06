@@ -38,7 +38,7 @@ class ZoomAnimator:NSObject, UIViewControllerAnimatedTransitioning {
             
             let fromVCSnapshot = fromVC.view.snapshotViewAfterScreenUpdates(true)
             fromVCSnapshot.frame = initialFrame
-            fromVCSnapshot.layer.cornerRadius = 25
+            fromVCSnapshot.layer.cornerRadius = 6
             fromVCSnapshot.layer.masksToBounds = true
             
             containerView.addSubview(toVC.view)
@@ -64,7 +64,7 @@ class ZoomAnimator:NSObject, UIViewControllerAnimatedTransitioning {
             
             let toVCSnapshot = toVC.view.snapshotViewAfterScreenUpdates(true)
             toVCSnapshot.frame = initialFrame
-            toVCSnapshot.layer.cornerRadius = 25
+            toVCSnapshot.layer.cornerRadius = 6
             toVCSnapshot.layer.masksToBounds = true
             
             containerView.addSubview(toVC.view)
