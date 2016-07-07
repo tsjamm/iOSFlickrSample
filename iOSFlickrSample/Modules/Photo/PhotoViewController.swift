@@ -9,13 +9,11 @@
 import UIKit
 
 /// The photo view controller that shows the big image for a thumbnail
-class PhotoViewController:UIViewController {
+class PhotoViewController:BaseViewController {
 
     @IBOutlet weak var imageView: UIImageView!
     var thumbnail:UIImage? = nil
     var largeImage:UIImage? = nil
-    
-    let zoomAnimator = ZoomAnimator()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,5 +35,6 @@ class PhotoViewController:UIViewController {
         //NSLog("Tap occurred")
         //NSLog("Info: photoFrame = \(self.imageView.frame)")
         BaseNavigationController.getInstance().popViewControllerAnimated(true)
+        //self.dismissViewControllerAnimated(true, completion: nil)
     }
 }

@@ -26,6 +26,9 @@ class PhotoManager {
             
             
             BaseNavigationController.getInstance().pushViewController(photoVC, animated: true)
+//            if let pVC = presentingVC {
+//                pVC.presentViewController(photoVC, animated: true, completion: nil)
+//            }
         }
         
     }
