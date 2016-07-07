@@ -21,5 +21,6 @@ struct Constants {
     
     enum StoryBoardVCID:String {
         case PhotoViewController
+        case GalleryViewController
     }
 }

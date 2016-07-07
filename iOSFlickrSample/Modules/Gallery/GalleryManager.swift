@@ -51,16 +51,16 @@ class GalleryManager {
         callback()
     }
     
-    static func shouldSelectItemAtIndexPath(collectionVC:UICollectionViewController, collectionView: UICollectionView, indexPath: NSIndexPath) -> Bool {
+    static func shouldSelectItemAtIndexPath(collectionView: UICollectionView, indexPath: NSIndexPath) -> Bool {
         if let fPhoto = getFlickrPhotoForIndexPath(indexPath) {
             
-            PhotoManager.showPhotoView(fPhoto, presentingVC: collectionVC, zoomOriginFrame: collectionVC.getRelativeCellFrameInSuperView(indexPath))
+            PhotoManager.showPhotoView(fPhoto, zoomOriginFrame: collectionView.getRelativeCellFrameInSuperView(indexPath))
             
         }
         return false
     }
     
-    static func sizeForItemAtIndexPath(collectionVC:UICollectionViewController, collectionView: UICollectionView, indexPath: NSIndexPath) -> CGSize {
+    static func sizeForItemAtIndexPath(collectionView: UICollectionView, indexPath: NSIndexPath) -> CGSize {
         guard let fPhoto = getFlickrPhotoForIndexPath(indexPath) else {
             NSLog("Error: No Photo for index path \(indexPath)")
             return CGSizeMake(100, 100)

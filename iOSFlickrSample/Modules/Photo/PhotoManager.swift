@@ -10,14 +10,15 @@ import UIKit
 
 class PhotoManager {
     
-    static func showPhotoView(flickrPhoto:FlickrPhoto, presentingVC:UIViewController?=nil, zoomOriginFrame:CGRect?=nil) {
+    static func showPhotoView(flickrPhoto:FlickrPhoto, zoomOriginFrame:CGRect?=nil) {
         
         if let photoVC = UIStoryboard(name: "Photo", bundle: nil).instantiateViewControllerWithIdentifier(Constants.StoryBoardVCID.PhotoViewController.rawValue) as? PhotoViewController {
             
             setInitialPhotoVCInfo(photoVC, flickrPhoto: flickrPhoto)
             
             updateLargeImageInPhoto(flickrPhoto, callback: { 
-                photoVC.imageView.image = flickrPhoto.largeImage
+                //photoVC.imageView.image = flickrPhoto.largeImage
+                photoVC.imageView.setImageWithAnimation(flickrPhoto.largeImage)
                 photoVC.view.removeLoadingView()
                 setPhotoVCAnimatorInfo(flickrPhoto, photoVC: photoVC, zoomOriginFrame: zoomOriginFrame)
             })
