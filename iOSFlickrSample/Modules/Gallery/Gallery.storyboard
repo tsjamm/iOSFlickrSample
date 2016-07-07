@@ -28,16 +28,16 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fC3-Cq-q1k">
-                                            <rect key="frame" x="5" y="5" width="190" height="190"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                         </imageView>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <constraints>
-                                    <constraint firstItem="fC3-Cq-q1k" firstAttribute="leading" secondItem="Dhj-iK-d5v" secondAttribute="leading" constant="5" id="DoA-io-SiY"/>
-                                    <constraint firstAttribute="trailing" secondItem="fC3-Cq-q1k" secondAttribute="trailing" constant="5" id="OFj-vk-Nar"/>
-                                    <constraint firstAttribute="bottom" secondItem="fC3-Cq-q1k" secondAttribute="bottom" constant="5" id="gyX-mi-AsQ"/>
-                                    <constraint firstItem="fC3-Cq-q1k" firstAttribute="top" secondItem="Dhj-iK-d5v" secondAttribute="top" constant="5" id="k9J-OJ-3Uz"/>
+                                    <constraint firstItem="fC3-Cq-q1k" firstAttribute="leading" secondItem="Dhj-iK-d5v" secondAttribute="leading" id="DoA-io-SiY"/>
+                                    <constraint firstAttribute="trailing" secondItem="fC3-Cq-q1k" secondAttribute="trailing" id="OFj-vk-Nar"/>
+                                    <constraint firstAttribute="bottom" secondItem="fC3-Cq-q1k" secondAttribute="bottom" id="gyX-mi-AsQ"/>
+                                    <constraint firstItem="fC3-Cq-q1k" firstAttribute="top" secondItem="Dhj-iK-d5v" secondAttribute="top" id="k9J-OJ-3Uz"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="imageView" destination="fC3-Cq-q1k" id="Gda-xq-fjz"/>
@@ -48,21 +48,21 @@
                             <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cdO-e1-wF7">
-                                    <rect key="frame" x="122" y="6" width="77" height="38"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cdO-e1-wF7">
+                                    <rect key="frame" x="128" y="10" width="64" height="31"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="K01-an-UGP">
-                                    <rect key="frame" x="0.0" y="7" width="37" height="37"/>
+                                    <rect key="frame" x="10" y="7" width="37" height="37"/>
                                 </activityIndicatorView>
                             </subviews>
-                            <color key="backgroundColor" white="0.0" alpha="0.3002825798" colorSpace="deviceWhite"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.79609929079290787" colorSpace="deviceWhite"/>
                             <constraints>
                                 <constraint firstItem="cdO-e1-wF7" firstAttribute="centerY" secondItem="T5W-6U-PZk" secondAttribute="centerY" id="GbL-KD-967"/>
                                 <constraint firstItem="K01-an-UGP" firstAttribute="centerY" secondItem="T5W-6U-PZk" secondAttribute="centerY" id="KQI-1c-Kow"/>
-                                <constraint firstItem="K01-an-UGP" firstAttribute="leading" secondItem="T5W-6U-PZk" secondAttribute="leading" id="SmC-MM-xPv"/>
+                                <constraint firstItem="K01-an-UGP" firstAttribute="leading" secondItem="T5W-6U-PZk" secondAttribute="leading" constant="10" id="SmC-MM-xPv"/>
                                 <constraint firstItem="cdO-e1-wF7" firstAttribute="centerX" secondItem="T5W-6U-PZk" secondAttribute="centerX" id="Wuh-Vm-Pbh"/>
                             </constraints>
                             <connections>

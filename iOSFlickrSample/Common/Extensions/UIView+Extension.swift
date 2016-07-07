@@ -1,15 +1,12 @@
 //
-//  Extensions.swift
+//  UIView+Extension.swift
 //  iOSFlickrSample
 //
-//  Created by Sai Teja Jammalamadaka on 7/4/16.
+//  Created by Sai Teja Jammalamadaka on 7/7/16.
 //  Copyright © 2016 tsjamm. All rights reserved.
 //
 
 import UIKit
-
-// This File Contains common extensions for addition functionality
-
 
 var LoadingViewAssociatedObjectHandle: UInt8 = 0
 /// This is for Loading View (Small black square with activity indicator
@@ -63,10 +60,10 @@ extension UIView {
         UIView.animateWithDuration(0.4, animations: {
             self.frame = newFrame
             
-            }) { (animationComplete) in
-                if animationComplete {
-                    callback()
-                }
+        }) { (animationComplete) in
+            if animationComplete {
+                callback()
+            }
         }
     }
     

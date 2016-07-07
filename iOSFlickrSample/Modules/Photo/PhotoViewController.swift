@@ -27,6 +27,9 @@ class PhotoViewController:UIViewController {
         self.view.userInteractionEnabled = true
         
         self.transitioningDelegate = self
+        if let nVC = self.navigationController {
+            nVC.delegate = self
+        }
         
         if let lI = largeImage {
             self.imageView.image = lI
@@ -37,7 +40,8 @@ class PhotoViewController:UIViewController {
     
     func onTap(recognizer:UITapGestureRecognizer) {
         NSLog("Tap occurred")
-        self.dismissViewControllerAnimated(true, completion: nil)
+        //self.dismissViewControllerAnimated(true, completion: nil)
+        NSLog("Info: photoFrame = \(self.imageView.frame)")
     }
     
     
@@ -53,5 +57,21 @@ extension PhotoViewController:UIViewControllerTransitioningDelegate {
     func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         self.zoomAnimator.doReverse = true
         return self.zoomAnimator
+    }
+}
+
+extension PhotoViewController:UINavigationControllerDelegate {
+    func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        
+        switch operation {
+        case UINavigationControllerOperation.Push:
+            self.zoomAnimator.doReverse = false
+        case UINavigationControllerOperation.Pop:
+            self.zoomAnimator.doReverse = true
+        default:
+            ()
+        }
+        return self.zoomAnimator
+        
     }
 }

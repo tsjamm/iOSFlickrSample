@@ -19,17 +19,13 @@ class PhotoManager {
             updateLargeImageInPhoto(flickrPhoto, callback: { 
                 photoVC.imageView.image = flickrPhoto.largeImage
                 photoVC.view.removeLoadingView()
+                setPhotoVCAnimatorInfo(flickrPhoto, photoVC: photoVC, zoomOriginFrame: zoomOriginFrame)
             })
             
-            if let originFrame = zoomOriginFrame {
-                photoVC.zoomAnimator.originFrame = originFrame
-            }
+            setPhotoVCAnimatorInfo(flickrPhoto, photoVC: photoVC, zoomOriginFrame: zoomOriginFrame)
             
-            if let pVC = presentingVC {
-                pVC.presentViewController(photoVC, animated: true, completion: nil)
-            } else if let topVC = UIApplication.sharedApplication().keyWindow?.rootViewController {
-                topVC.presentViewController(photoVC, animated: true, completion: nil)
-            }
+            
+            BaseNavigationController.getInstance().pushViewController(photoVC, animated: true)
         }
         
     }
@@ -39,6 +35,22 @@ class PhotoManager {
         photoVC.thumbnail = flickrPhoto.thumbnail
         photoVC.largeImage = flickrPhoto.largeImage
         photoVC.view.showLoadingView()
+    }
+    
+    static func setPhotoVCAnimatorInfo(flickrPhoto:FlickrPhoto, photoVC:PhotoViewController, zoomOriginFrame:CGRect? = nil) {
+        if let originFrame = zoomOriginFrame {
+            let animator = ZoomAnimator()
+            var originImg:UIImage? = nil
+            if let largeImg = flickrPhoto.largeImage {
+                originImg = largeImg
+            } else if let thumbImg = flickrPhoto.thumbnail {
+                originImg = thumbImg
+            }
+            let originImageView = UIImageView(image: originImg)
+            originImageView.contentMode = UIViewContentMode.ScaleAspectFit
+            animator.setOriginState(originFrame, originView: originImageView)
+            photoVC.transitionAnimator = animator
+        }
     }
     
     static func updateLargeImageInPhoto(flickrPhoto:FlickrPhoto, callback:(()->())) {
