@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Realm
 
 class FlickrPhoto {
     
@@ -37,4 +38,52 @@ class FlickrPhoto {
         
     }
     
+    func getRealmFlickrPhoto() -> RealmFlickrPhoto {
+        let toReturn = RealmFlickrPhoto()
+        
+        
+        if let unwrapped = self.farm {
+            toReturn.farm = unwrapped
+        }
+        if let unwrapped = self.id {
+            toReturn.id = unwrapped
+        }
+        if let unwrapped = self.isFamily {
+            toReturn.isFamily = unwrapped
+        }
+        if let unwrapped = self.isFriend {
+            toReturn.isFriend = unwrapped
+        }
+        if let unwrapped = self.isPublic {
+            toReturn.isPublic = unwrapped
+        }
+        if let unwrapped = self.owner {
+            toReturn.owner = unwrapped
+        }
+        if let unwrapped = self.secret {
+            toReturn.secret = unwrapped
+        }
+        if let unwrapped = self.server {
+            toReturn.server = unwrapped
+        }
+        if let unwrapped = self.title {
+            toReturn.title = unwrapped
+        }
+        
+        
+        return toReturn
+    }
+    
+    func storeInRealm() {
+        let realm = RLMRealm.defaultRealm()
+        realm.beginWriteTransaction()
+        
+        getRealmFlickrPhoto()
+        
+        do {
+            try realm.commitWriteTransaction()
+        } catch _ {
+            NSLog("Error: Realm write failed for RealmFlickrResponse")
+        }
+    }
 }
