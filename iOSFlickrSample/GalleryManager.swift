@@ -51,27 +51,38 @@ class GalleryManager {
         callback()
     }
     
-    static func openPhotoView(indexPath:NSIndexPath, presentingVC:UIViewController, zoomOriginFrame:CGRect?=nil) {
+    static func shouldSelectItemAtIndexPath(collectionVC:UICollectionViewController, collectionView: UICollectionView, indexPath: NSIndexPath) -> Bool {
         if let fPhoto = getFlickrPhotoForIndexPath(indexPath) {
-            if let photoVC = UIStoryboard(name: "Photo", bundle: nil).instantiateViewControllerWithIdentifier(Constants.StoryBoardVCID.PhotoViewController.rawValue) as? PhotoViewController {
-                photoVC.navigationItem.title = fPhoto.title
-                //photoVC.imageView.image = fPhoto.thumbnail
-                photoVC.thumbnail = fPhoto.thumbnail
-                photoVC.largeImage = fPhoto.largeImage
-                photoVC.view.showLoadingView()
-                FlickrDataManager.downloadImageAsync(fPhoto, size: Constants.FlickrPhotoSize.Big.rawValue, callback: { (image) in
-                    fPhoto.largeImage = image
-                    photoVC.imageView.image = fPhoto.largeImage
-                    photoVC.view.removeLoadingView()
-                })
-                
-                if let originFrame = zoomOriginFrame {
-                    photoVC.zoomAnimator.originFrame = originFrame
-                }
-                
-                presentingVC.presentViewController(photoVC, animated: true, completion: nil)
-            }
+            
+            PhotoManager.showPhotoView(fPhoto, presentingVC: collectionVC, zoomOriginFrame: collectionVC.getRelativeCellFrameInSuperView(indexPath))
+            
         }
+        return false
     }
     
+    static func sizeForItemAtIndexPath(collectionVC:UICollectionViewController, collectionView: UICollectionView, indexPath: NSIndexPath) -> CGSize {
+        guard let fPhoto = getFlickrPhotoForIndexPath(indexPath) else {
+            NSLog("Error: No Photo for index path \(indexPath)")
+            return CGSizeMake(100, 100)
+        }
+        guard let thumbnail = fPhoto.thumbnail else {
+            NSLog("Error: No thumbnail for photo \(fPhoto)")
+            return CGSizeMake(100,100)
+        }
+        var size = thumbnail.size
+        size.height += 10
+        size.width += 10
+        return size
+    }
+    
+    static func setCellInfo(fCell:FlickrPhotoCell, indexPath:NSIndexPath) {
+        fCell.backgroundColor = UIColor.greenColor()
+        fCell.imageView.image = getFlickrPhotoForIndexPath(indexPath)?.thumbnail
+    }
+    
+    static func setSectionHeaderInfo(fSectionHeader:FlickrSectionHeaderView, indexPath:NSIndexPath) {
+        let fReponse = getFlickrResponseForIndexPath(indexPath)
+        fSectionHeader.headerLabel.text = fReponse.searchTerm
+        fSectionHeader.isLoading = fReponse.isCached
+    }
 }

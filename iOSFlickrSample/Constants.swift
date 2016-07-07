@@ -19,8 +19,6 @@ struct Constants {
         case Big = "b"
     }
     
-    static let photoVCID = "PhotoViewController"
-    
     enum StoryBoardVCID:String {
         case PhotoViewController
     }

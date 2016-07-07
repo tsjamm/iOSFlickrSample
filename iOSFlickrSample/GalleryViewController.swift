@@ -52,30 +52,25 @@ class GalleryViewController: UICollectionViewController {
     
     override func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
         
-        //performSegueWithIdentifier(seguePhotoView, sender: indexPath)
-        //openPhotoView(indexPath)
+        return GalleryManager.shouldSelectItemAtIndexPath(self, collectionView: collectionView, indexPath: indexPath)
         
-        GalleryManager.openPhotoView(indexPath, presentingVC: self, zoomOriginFrame: getRelativeCellFrameInSuperView(indexPath))
-        
-        return false
     }
     
     
-    /// DataSource methods are in this extension, the protocol does not need to be explicitly added.
+    /// DataSource methods, the protocol does not need to be explicitly added.
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return GalleryManager.getNumberOfSearches()
     }
     
-    /// DataSource methods are in this extension, the protocol does not need to be explicitly added.
+    /// DataSource methods, the protocol does not need to be explicitly added.
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return GalleryManager.getNumberOfPhotos(section)
     }
     
-    /// DataSource methods are in this extension, the protocol does not need to be explicitly added.
+    /// DataSource methods, the protocol does not need to be explicitly added.
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! FlickrPhotoCell
-        cell.backgroundColor = UIColor.grayColor()
-        cell.imageView.image = GalleryManager.getFlickrPhotoForIndexPath(indexPath)?.thumbnail
+        GalleryManager.setCellInfo(cell, indexPath: indexPath)
         return cell
     }
     
@@ -83,9 +78,8 @@ class GalleryViewController: UICollectionViewController {
         switch kind {
             case UICollectionElementKindSectionHeader:
                 let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: self.sectionIdentifier, forIndexPath: indexPath) as! FlickrSectionHeaderView
-                let fReponse = GalleryManager.getFlickrResponseForIndexPath(indexPath)
-                headerView.headerLabel.text = fReponse.searchTerm
-                if fReponse.isCached {
+                GalleryManager.setSectionHeaderInfo(headerView, indexPath: indexPath)
+                if headerView.isLoading {
                     headerView.activityIndicator.startAnimating()
                 } else {
                     headerView.activityIndicator.stopAnimating()
@@ -99,22 +93,7 @@ class GalleryViewController: UICollectionViewController {
     override func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         self.searchField.resignFirstResponder()
     }
-    
-    func getRelativeCellFrameInSuperView(indexPath:NSIndexPath) -> CGRect? {
-        if let cv = self.collectionView {
-            if let atrb = cv.layoutAttributesForItemAtIndexPath(indexPath) {
-                let cellRect = atrb.frame
-                let cellFrameInSuperView = self.collectionView!.convertRect(cellRect, toView: cv.superview)
-                
-                return cellFrameInSuperView
-                
-            }
-        }
-        return nil
-    }
 }
-
-
 
 
 /// The delegate for the search field
@@ -130,18 +109,7 @@ extension GalleryViewController:UITextFieldDelegate {
 extension GalleryViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        guard let fPhoto = GalleryManager.getFlickrPhotoForIndexPath(indexPath) else {
-            NSLog("Error: No Photo for index path \(indexPath)")
-            return CGSizeMake(100, 100)
-        }
-        guard let thumbnail = fPhoto.thumbnail else {
-            NSLog("Error: No thumbnail for photo \(fPhoto)")
-            return CGSizeMake(100,100)
-        }
-        var size = thumbnail.size
-        size.height += 10
-        size.width += 10
-        return size
+        return GalleryManager.sizeForItemAtIndexPath(self, collectionView: collectionView, indexPath: indexPath)
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
