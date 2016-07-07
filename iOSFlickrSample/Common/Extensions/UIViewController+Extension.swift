@@ -20,3 +20,17 @@ extension UIViewController {
         }
     }
 }
+
+extension UIViewController:UIViewControllerTransitioningDelegate {
+    public func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        guard let tA = self.transitionAnimator else {return nil}
+        tA.doReverse = false
+        return tA
+    }
+    
+    public func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        guard let tA = self.transitionAnimator else {return nil}
+        tA.doReverse = true
+        return tA
+    }
+}

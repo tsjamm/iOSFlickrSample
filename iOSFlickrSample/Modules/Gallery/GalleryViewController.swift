@@ -32,6 +32,11 @@ class GalleryViewController: UICollectionViewController {
             dispatch_async(dispatch_get_main_queue(), { 
                 if let cView = self.collectionView {
                     cView.reloadData()
+                    var offsetY:CGFloat = 0
+                    if let _ = self.navigationController {
+                        offsetY += 64
+                    }
+                    cView.setContentOffset(CGPointMake(0, 0-offsetY), animated: true)
                 }
                 self.view.removeLoadingView()
             })

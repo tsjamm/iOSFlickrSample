@@ -22,10 +22,10 @@
 		884C41071D2E3CF1008E623A /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884C41031D2E3CF1008E623A /* PhotoViewController.swift */; };
 		884C410B1D2E3D0D008E623A /* FlickrPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884C41091D2E3D0D008E623A /* FlickrPhoto.swift */; };
 		884C410C1D2E3D0D008E623A /* FlickrResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884C410A1D2E3D0D008E623A /* FlickrResponse.swift */; };
-		884C410E1D2E42E2008E623A /* BaseTransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884C410D1D2E42E2008E623A /* BaseTransitionAnimator.swift */; };
-		884C41101D2E4854008E623A /* ZoomAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884C410F1D2E4854008E623A /* ZoomAnimator.swift */; };
 		884C41161D2E5538008E623A /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884C41151D2E5538008E623A /* UIView+Extension.swift */; };
 		884C41181D2E557D008E623A /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884C41171D2E557D008E623A /* UIViewController+Extension.swift */; };
+		884C411C1D2E6DDA008E623A /* BaseTransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884C411A1D2E6DDA008E623A /* BaseTransitionAnimator.swift */; };
+		884C411D1D2E6DDA008E623A /* ZoomAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884C411B1D2E6DDA008E623A /* ZoomAnimator.swift */; };
 		88D942481D2A610900924ED3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D942471D2A610900924ED3 /* AppDelegate.swift */; };
 		88D9424D1D2A610900924ED3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88D9424B1D2A610900924ED3 /* Main.storyboard */; };
 		88D9424F1D2A610900924ED3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88D9424E1D2A610900924ED3 /* Assets.xcassets */; };
@@ -69,10 +69,10 @@
 		884C41031D2E3CF1008E623A /* PhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotoViewController.swift; path = Modules/Photo/PhotoViewController.swift; sourceTree = "<group>"; };
 		884C41091D2E3D0D008E623A /* FlickrPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FlickrPhoto.swift; path = DataModels/FlickrPhoto.swift; sourceTree = "<group>"; };
 		884C410A1D2E3D0D008E623A /* FlickrResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FlickrResponse.swift; path = DataModels/FlickrResponse.swift; sourceTree = "<group>"; };
-		884C410D1D2E42E2008E623A /* BaseTransitionAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseTransitionAnimator.swift; path = Common/BaseTransitionAnimator.swift; sourceTree = "<group>"; };
-		884C410F1D2E4854008E623A /* ZoomAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ZoomAnimator.swift; path = Common/ZoomAnimator.swift; sourceTree = "<group>"; };
 		884C41151D2E5538008E623A /* UIView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIView+Extension.swift"; path = "Common/Extensions/UIView+Extension.swift"; sourceTree = "<group>"; };
 		884C41171D2E557D008E623A /* UIViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIViewController+Extension.swift"; path = "Common/Extensions/UIViewController+Extension.swift"; sourceTree = "<group>"; };
+		884C411A1D2E6DDA008E623A /* BaseTransitionAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseTransitionAnimator.swift; path = Common/Transitions/BaseTransitionAnimator.swift; sourceTree = "<group>"; };
+		884C411B1D2E6DDA008E623A /* ZoomAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ZoomAnimator.swift; path = Common/Transitions/ZoomAnimator.swift; sourceTree = "<group>"; };
 		88D942441D2A610900924ED3 /* iOSFlickrSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSFlickrSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88D942471D2A610900924ED3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		88D9424C1D2A610900924ED3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -147,6 +147,15 @@
 				884C41171D2E557D008E623A /* UIViewController+Extension.swift */,
 			);
 			name = Extensions;
+			sourceTree = "<group>";
+		};
+		884C41191D2E6D9E008E623A /* Transitions */ = {
+			isa = PBXGroup;
+			children = (
+				884C411A1D2E6DDA008E623A /* BaseTransitionAnimator.swift */,
+				884C411B1D2E6DDA008E623A /* ZoomAnimator.swift */,
+			);
+			name = Transitions;
 			sourceTree = "<group>";
 		};
 		88D9423B1D2A610900924ED3 = {
@@ -249,10 +258,9 @@
 		88D942991D2D620000924ED3 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				884C41191D2E6D9E008E623A /* Transitions */,
 				884C40F11D2E3C9E008E623A /* Constants.swift */,
 				884C40F31D2E3C9E008E623A /* FlickrDataManager.swift */,
-				884C410D1D2E42E2008E623A /* BaseTransitionAnimator.swift */,
-				884C410F1D2E4854008E623A /* ZoomAnimator.swift */,
 				884C40EA1D2E3099008E623A /* Extensions */,
 			);
 			name = Common;
@@ -451,13 +459,13 @@
 				88D942481D2A610900924ED3 /* AppDelegate.swift in Sources */,
 				884C41001D2E3CB9008E623A /* GalleryViewController.swift in Sources */,
 				884C41161D2E5538008E623A /* UIView+Extension.swift in Sources */,
-				884C410E1D2E42E2008E623A /* BaseTransitionAnimator.swift in Sources */,
 				884C40FC1D2E3CB9008E623A /* FlickrPhotoCell.swift in Sources */,
+				884C411C1D2E6DDA008E623A /* BaseTransitionAnimator.swift in Sources */,
+				884C411D1D2E6DDA008E623A /* ZoomAnimator.swift in Sources */,
 				884C40FD1D2E3CB9008E623A /* FlickrSectionHeaderView.swift in Sources */,
 				884C410C1D2E3D0D008E623A /* FlickrResponse.swift in Sources */,
 				884C40F61D2E3C9E008E623A /* FlickrDataManager.swift in Sources */,
 				884C41071D2E3CF1008E623A /* PhotoViewController.swift in Sources */,
-				884C41101D2E4854008E623A /* ZoomAnimator.swift in Sources */,
 				884C40FF1D2E3CB9008E623A /* GalleryManager.swift in Sources */,
 				884C40EE1D2E3AEE008E623A /* BaseNavigationController.swift in Sources */,
 			);
