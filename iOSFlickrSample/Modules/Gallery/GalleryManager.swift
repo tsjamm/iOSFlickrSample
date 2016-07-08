@@ -18,20 +18,20 @@ class GalleryManager {
     
     static func getNumberOfPhotos(forSearchIndex:Int) -> Int {
         let searchTerm = self.flickrSearchStack[forSearchIndex]
-        return FlickrDataManager.flickrReponseMap[searchTerm]?.photo.count ?? 0
+        return FlickrDataManager.getCachedFlickrResponse(searchTerm)?.photo.count ?? 0
     }
     
     static func getFlickrResponseForIndexPath(indexPath:NSIndexPath) -> FlickrResponse {
         let section = indexPath.section
         let searchTerm = self.flickrSearchStack[section]
-        return FlickrDataManager.flickrReponseMap[searchTerm] ?? FlickrResponse(dataMap: [:])
+        return FlickrDataManager.getCachedFlickrResponse(searchTerm) ?? FlickrResponse(dataMap: [:])
     }
     
     static func getFlickrPhotoForIndexPath(indexPath:NSIndexPath) -> FlickrPhoto? {
         let section = indexPath.section
         let searchTerm = self.flickrSearchStack[section]
         let row = indexPath.row
-        return FlickrDataManager.flickrReponseMap[searchTerm]?.photo[row]
+        return FlickrDataManager.getCachedFlickrResponse(searchTerm)?.photo[row]
     }
     
     static func fetchFlickrData(searchTerm:String, callback:(()->())) {

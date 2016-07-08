@@ -10,6 +10,7 @@ import UIKit
 import Foundation
 import Alamofire
 import AlamofireImage
+import RealmSwift
 
 /// This manages the Flickr Data Fetching Part
 class FlickrDataManager {
@@ -22,20 +23,34 @@ class FlickrDataManager {
             return
         }
         
-        if let cachedResponse = flickrReponseMap[searchTerm] {
+        if let cachedResponse = getCachedFlickrResponse(searchTerm) {
             cachedResponse.isCached = true
             callback(cachedResponse)
         }
         
+    
         getJSONResult(flickrURL.absoluteString) { (response) in
             if let fResponse = processFlickrResponseObject(response.result.value) {
                 fResponse.searchTerm = searchTerm
+                fResponse.isCached = false
+                fResponse.updateInRealm()
                 flickrReponseMap[searchTerm] = fResponse
                 callback(fResponse)
                 
             }
         }
         
+    }
+    
+    static func getCachedFlickrResponse(searchTerm:String) -> FlickrResponse? {
+        if let cachedResponse = flickrReponseMap[searchTerm] {
+            return cachedResponse
+        } else if let realmResponse = FlickrResponse.retrieveFromRealm(searchTerm) {
+            let cachedResponse = FlickrResponse(realmFlickrResponse:realmResponse)
+            flickrReponseMap[searchTerm] = cachedResponse
+            return cachedResponse
+        }
+        return nil
     }
     
     private static func getJSONResult(url:String, queryParams:[String:String]?=nil, callback:((response:Response<AnyObject, NSError>)->())) {

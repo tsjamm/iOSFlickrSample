@@ -6,9 +6,9 @@
 //  Copyright © 2016 tsjamm. All rights reserved.
 //
 
-import Realm
+import RealmSwift
 
-class RealmFlickrResponse:RLMObject {
+class RealmFlickrResponse:Object {
     
     dynamic var page:Int = 0
     dynamic var pages:Int = 0
@@ -18,5 +18,6 @@ class RealmFlickrResponse:RLMObject {
     dynamic var searchTerm:String = ""
     dynamic var isCached:Bool = true
     
-    let photos = RLMArray(objectClassName: RealmFlickrPhoto.className())
+    let photos = List<RealmFlickrPhoto>()
+    
 }

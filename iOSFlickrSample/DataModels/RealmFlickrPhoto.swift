@@ -7,9 +7,9 @@
 //
 
 import UIKit
-import Realm
+import RealmSwift
 
-class RealmFlickrPhoto: RLMObject {
+class RealmFlickrPhoto: Object {
     
     dynamic var id:String = ""
     dynamic var title:String = ""

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Realm
+import RealmSwift
 
 class FlickrPhoto {
     
@@ -35,12 +35,22 @@ class FlickrPhoto {
         self.secret = dataMap["secret"] as? String
         self.server = dataMap["server"] as? String
         self.title = dataMap["title"] as? String
-        
     }
     
-    func getRealmFlickrPhoto() -> RealmFlickrPhoto {
+    init(realmFlickrPhoto:RealmFlickrPhoto) {
+        self.farm = realmFlickrPhoto.farm
+        self.id = realmFlickrPhoto.id
+        self.isFamily = realmFlickrPhoto.isFamily
+        self.isFriend = realmFlickrPhoto.isFriend
+        self.isPublic = realmFlickrPhoto.isPublic
+        self.owner = realmFlickrPhoto.owner
+        self.secret = realmFlickrPhoto.secret
+        self.server = realmFlickrPhoto.server
+        self.title = realmFlickrPhoto.title
+    }
+    
+    func toRealmFlickrPhoto() -> RealmFlickrPhoto {
         let toReturn = RealmFlickrPhoto()
-        
         
         if let unwrapped = self.farm {
             toReturn.farm = unwrapped
@@ -70,20 +80,31 @@ class FlickrPhoto {
             toReturn.title = unwrapped
         }
         
-        
         return toReturn
     }
     
     func storeInRealm() {
-        let realm = RLMRealm.defaultRealm()
-        realm.beginWriteTransaction()
-        
-        getRealmFlickrPhoto()
-        
-        do {
-            try realm.commitWriteTransaction()
-        } catch _ {
-            NSLog("Error: Realm write failed for RealmFlickrResponse")
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) {
+            do {
+                let realm = try Realm()
+                try realm.write({
+                    realm.add(self.toRealmFlickrPhoto())
+                })
+            } catch _ {
+                NSLog("Error: Realm write failed for RealmFlickrResponse")
+            }
+            
         }
+    }
+    
+    class func retrieveFromRealm(id:String) -> RealmFlickrPhoto? {
+        do {
+            let realm = try Realm()
+            let predicate = NSPredicate(format: "id = %@", id)
+            return realm.objects(RealmFlickrPhoto.self).filter(predicate).first
+        } catch {
+            NSLog("Error: Realm read failed for RealmFlickrPhoto\n\(error)")
+        }
+        return nil
     }
 }

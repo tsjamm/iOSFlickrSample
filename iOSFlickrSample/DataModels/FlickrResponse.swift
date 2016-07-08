@@ -6,7 +6,7 @@
 //  Copyright © 2016 tsjamm. All rights reserved.
 //
 
-import Realm
+import RealmSwift
 
 class FlickrResponse {
     
@@ -33,22 +33,22 @@ class FlickrResponse {
         }
     }
     
-    func storeInRealm() {
-        let realm = RLMRealm.defaultRealm()
-        realm.beginWriteTransaction()
+    init(realmFlickrResponse:RealmFlickrResponse) {
+        self.page = realmFlickrResponse.page
+        self.pages = realmFlickrResponse.pages
+        self.perPage = realmFlickrResponse.perPage
+        self.total = realmFlickrResponse.total
         
-        getRealmFlickrResponse()
+        self.searchTerm = realmFlickrResponse.searchTerm
+        self.isCached = true
         
-        do {
-            try realm.commitWriteTransaction()
-        } catch _ {
-            NSLog("Error: Realm write failed for RealmFlickrResponse")
+        for realmPhoto in realmFlickrResponse.photos {
+            self.photo.append(FlickrPhoto(realmFlickrPhoto: realmPhoto))
         }
-        
     }
     
-    func getRealmFlickrResponse() -> RealmFlickrResponse {
-        let realmFlickrResponse = RealmFlickrResponse()
+    func toRealmFlickrResponse(realmFlickrResponse:RealmFlickrResponse=RealmFlickrResponse()) -> RealmFlickrResponse {
+        //let realmFlickrResponse = RealmFlickrResponse()
         if let toStore = self.page {
             realmFlickrResponse.page = toStore
         }
@@ -62,9 +62,56 @@ class FlickrResponse {
             realmFlickrResponse.total = toStore
         }
         
+        realmFlickrResponse.searchTerm = self.searchTerm
+        
+        
         for flickrPhoto in self.photo {
-            realmFlickrResponse.photos.addObject(flickrPhoto.getRealmFlickrPhoto())
+            if let photoId = flickrPhoto.id, let retrievedRFP = FlickrPhoto.retrieveFromRealm(photoId) {
+                realmFlickrResponse.photos.append(retrievedRFP)
+            } else {
+                realmFlickrResponse.photos.append(flickrPhoto.toRealmFlickrPhoto())
+            }
         }
         return realmFlickrResponse
     }
+    
+    func updateInRealm() {
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) {
+            if let rFR = FlickrResponse.retrieveFromRealm(self.searchTerm) {
+                
+                do {
+                    let realm = try Realm()
+                    try realm.write({
+                        self.toRealmFlickrResponse(rFR)
+                    })
+                } catch {
+                    NSLog("Error: Realm write failed for update in RealmFlickrResponse\n\(error)")
+                }
+                
+            } else {
+                
+                do {
+                    let realm = try Realm()
+                    try realm.write({
+                        realm.add(self.toRealmFlickrResponse())
+                    })
+                } catch {
+                    NSLog("Error: Realm write failed for RealmFlickrResponse\n\(error)")
+                }
+                
+            }
+        }
+    }
+    
+    class func retrieveFromRealm(searchTerm:String) -> RealmFlickrResponse? {
+        do {
+            let realm = try Realm()
+            let predicate = NSPredicate(format: "searchTerm = %@", searchTerm)
+            return realm.objects(RealmFlickrResponse.self).filter(predicate).first
+        } catch {
+            NSLog("Error: Realm read failed for RealmFlickrResponse\n\(error)")
+        }
+        return nil
+    }
+    
 }
