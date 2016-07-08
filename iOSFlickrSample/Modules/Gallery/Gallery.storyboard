@@ -95,7 +95,7 @@
                                 <action selector="onHistoryTap:" destination="3x9-V5-DEy" id="CTc-pL-Lo8"/>
                             </connections>
                         </barButtonItem>
-                        <textField key="titleView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search Flickr" textAlignment="natural" minimumFontSize="17" id="E9s-qC-0d4">
+                        <textField key="titleView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search Flickr" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" id="E9s-qC-0d4">
                             <rect key="frame" x="96" y="7" width="128" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>

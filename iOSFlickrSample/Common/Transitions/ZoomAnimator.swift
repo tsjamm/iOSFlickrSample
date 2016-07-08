@@ -91,7 +91,7 @@ class ZoomAnimator:BaseTransitionAnimator {
         containerView.addSubview(backgroundView)
         containerView.addSubview(animationView)
         
-        
+        toVC.view.frame = initialFrame
         toVC.view.hidden = false
         backgroundView.alpha = 1.0
         

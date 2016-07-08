@@ -31,14 +31,6 @@ class GalleryViewController: BaseViewController {
         HistoryManager.showHistoryView()
     }
     
-//    @IBAction func onClearTap(sender: AnyObject) {
-//        GalleryManager.clearFlickrData {
-//            if let cView = self.collectionView {
-//                cView.reloadData()
-//            }
-//            self.searchField.text = ""
-//        }
-//    }
     
     @IBAction func onSearchTap(sender: AnyObject) {
         doSearch()
@@ -62,6 +54,13 @@ class GalleryViewController: BaseViewController {
                 }
                 self.view.removeLoadingView()
             })
+        }
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        if let flowLayout = collectionView?.collectionViewLayout {
+            flowLayout.invalidateLayout()
         }
     }
 }

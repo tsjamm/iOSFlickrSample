@@ -58,7 +58,7 @@ class PhotoManager {
     }
     
     static func updateLargeImageInPhoto(flickrPhoto:FlickrPhoto, callback:(()->())) {
-        FlickrDataManager.downloadImageAsync(flickrPhoto, size: Constants.FlickrPhotoSize.Big.rawValue, callback: { (image) in
+        FlickrNetworkManager.downloadImageAsync(flickrPhoto, size: Constants.FlickrPhotoSize.Big.rawValue, callback: { (image) in
             flickrPhoto.largeImage = image
             callback()
         })

@@ -35,6 +35,7 @@
 		8850BEE91D2F987700465536 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8850BEE81D2F987700465536 /* HistoryViewController.swift */; };
 		8850BEEB1D2F989800465536 /* HistoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8850BEEA1D2F989800465536 /* HistoryManager.swift */; };
 		8850BEED1D2FB06A00465536 /* TranslateAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8850BEEC1D2FB06A00465536 /* TranslateAnimator.swift */; };
+		8850BEEF1D2FD19700465536 /* FlickrNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8850BEEE1D2FD19700465536 /* FlickrNetworkManager.swift */; };
 		88D942481D2A610900924ED3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D942471D2A610900924ED3 /* AppDelegate.swift */; };
 		88D9424D1D2A610900924ED3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88D9424B1D2A610900924ED3 /* Main.storyboard */; };
 		88D9424F1D2A610900924ED3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88D9424E1D2A610900924ED3 /* Assets.xcassets */; };
@@ -91,6 +92,7 @@
 		8850BEE81D2F987700465536 /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HistoryViewController.swift; path = Modules/History/HistoryViewController.swift; sourceTree = "<group>"; };
 		8850BEEA1D2F989800465536 /* HistoryManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HistoryManager.swift; path = Modules/History/HistoryManager.swift; sourceTree = "<group>"; };
 		8850BEEC1D2FB06A00465536 /* TranslateAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TranslateAnimator.swift; path = Common/Transitions/TranslateAnimator.swift; sourceTree = "<group>"; };
+		8850BEEE1D2FD19700465536 /* FlickrNetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FlickrNetworkManager.swift; path = Common/FlickrNetworkManager.swift; sourceTree = "<group>"; };
 		88D942441D2A610900924ED3 /* iOSFlickrSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSFlickrSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88D942471D2A610900924ED3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		88D9424C1D2A610900924ED3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -295,9 +297,10 @@
 			isa = PBXGroup;
 			children = (
 				884C41191D2E6D9E008E623A /* Transitions */,
+				884C40EA1D2E3099008E623A /* Extensions */,
 				884C40F11D2E3C9E008E623A /* Constants.swift */,
 				884C40F31D2E3C9E008E623A /* FlickrDataManager.swift */,
-				884C40EA1D2E3099008E623A /* Extensions */,
+				8850BEEE1D2FD19700465536 /* FlickrNetworkManager.swift */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -502,6 +505,7 @@
 				8850BEED1D2FB06A00465536 /* TranslateAnimator.swift in Sources */,
 				884C40FC1D2E3CB9008E623A /* FlickrPhotoCell.swift in Sources */,
 				884C41231D2E8636008E623A /* UIImageView+Extension.swift in Sources */,
+				8850BEEF1D2FD19700465536 /* FlickrNetworkManager.swift in Sources */,
 				884C411C1D2E6DDA008E623A /* BaseTransitionAnimator.swift in Sources */,
 				884C411D1D2E6DDA008E623A /* ZoomAnimator.swift in Sources */,
 				8850BEE11D2F860F00465536 /* FlickrPhoto.swift in Sources */,

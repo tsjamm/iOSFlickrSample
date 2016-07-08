@@ -49,15 +49,7 @@ class HistoryManager {
     }
     
     static func clearAllSearchesFromDB() {
-        do {
-            let realm = try Realm()
-            try realm.write({
-                realm.deleteAll()
-            })
-            
-        } catch {
-            NSLog("Error:\n\(error)")
-        }
+        FlickrDataManager.clearAllFlickrData()
     }
     
     static func getNumberOfSections() -> Int {
