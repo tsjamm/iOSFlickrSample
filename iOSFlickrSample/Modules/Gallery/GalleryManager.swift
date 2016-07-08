@@ -26,6 +26,9 @@ class GalleryManager {
         }
     }
     
+    static func clearSearches() {
+        flickrSearchStack.removeAll()
+    }
     
     static func getNumberOfSearches() -> Int {
         return self.flickrSearchStack.count

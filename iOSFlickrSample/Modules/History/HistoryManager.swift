@@ -50,6 +50,8 @@ class HistoryManager {
     
     static func clearAllSearchesFromDB() {
         FlickrDataManager.clearAllFlickrData()
+        GalleryManager.clearSearches()
+        GalleryManager.showGalleryView()
     }
     
     static func getNumberOfSections() -> Int {
