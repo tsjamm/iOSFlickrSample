@@ -97,7 +97,7 @@ class FlickrPhoto {
         }
     }
     
-    class func retrieveFromRealm(id:String) -> RealmFlickrPhoto? {
+    static func retrieveFromRealm(id:String) -> RealmFlickrPhoto? {
         do {
             let realm = try Realm()
             let predicate = NSPredicate(format: "id = %@", id)

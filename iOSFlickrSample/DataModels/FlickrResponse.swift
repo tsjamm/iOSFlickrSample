@@ -103,7 +103,7 @@ class FlickrResponse {
         }
     }
     
-    class func retrieveFromRealm(searchTerm:String) -> RealmFlickrResponse? {
+    static func retrieveFromRealm(searchTerm:String) -> RealmFlickrResponse? {
         do {
             let realm = try Realm()
             let predicate = NSPredicate(format: "searchTerm = %@", searchTerm)
@@ -112,6 +112,21 @@ class FlickrResponse {
             NSLog("Error: Realm read failed for RealmFlickrResponse\n\(error)")
         }
         return nil
+    }
+    
+    static func deleteFromRealm(searchTerm:String) {
+        do {
+            let realm = try Realm()
+            let predicate = NSPredicate(format: "searchTerm = %@", searchTerm)
+            let results = realm.objects(RealmFlickrResponse.self).filter(predicate)
+            for response in results {
+                try realm.write({ 
+                    realm.delete(response)
+                })
+            }
+        } catch {
+            NSLog("Error: Realm delete failed for RealmFlickrResponse\n\(error)")
+        }
     }
     
 }

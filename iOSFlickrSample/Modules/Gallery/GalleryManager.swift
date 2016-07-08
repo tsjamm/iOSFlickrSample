@@ -12,6 +12,21 @@ class GalleryManager {
     
     private static var flickrSearchStack = [String]()
     
+    static func showGalleryView(searchTerm:String? = nil) {
+        if let galleryVC = UIStoryboard(name: "Gallery", bundle: nil).instantiateViewControllerWithIdentifier(Constants.StoryBoardVCID.GalleryViewController.rawValue) as? GalleryViewController {
+            
+            //BaseNavigationController.getInstance().pushViewController(galleryVC, animated: true)
+            BaseNavigationController.getInstance().setViewControllers([galleryVC], animated: true)
+            
+            if let sTerm = searchTerm {
+                galleryVC.searchField.text = sTerm
+                galleryVC.doSearch()
+            }
+            
+        }
+    }
+    
+    
     static func getNumberOfSearches() -> Int {
         return self.flickrSearchStack.count
     }

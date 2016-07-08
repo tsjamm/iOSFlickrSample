@@ -90,9 +90,9 @@
                     </view>
                     <navigationItem key="navigationItem" id="OaV-P0-BL4">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" title="Clear" id="Vg7-ER-CZe">
+                        <barButtonItem key="leftBarButtonItem" title="History" id="Vg7-ER-CZe">
                             <connections>
-                                <action selector="onClearTap:" destination="3x9-V5-DEy" id="BA0-2x-TKC"/>
+                                <action selector="onHistoryTap:" destination="3x9-V5-DEy" id="CTc-pL-Lo8"/>
                             </connections>
                         </barButtonItem>
                         <textField key="titleView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search Flickr" textAlignment="natural" minimumFontSize="17" id="E9s-qC-0d4">

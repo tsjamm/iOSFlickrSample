@@ -22,5 +22,13 @@ struct Constants {
     enum StoryBoardVCID:String {
         case PhotoViewController
         case GalleryViewController
+        case HistoryViewController
+    }
+    
+    enum TransitionDirection:Int {
+        case LeftToRight
+        case RightToLeft
+        case TopToBottom
+        case BottomToTop
     }
 }

@@ -27,14 +27,18 @@ class GalleryViewController: BaseViewController {
     }
     
     
-    @IBAction func onClearTap(sender: AnyObject) {
-        GalleryManager.clearFlickrData {
-            if let cView = self.collectionView {
-                cView.reloadData()
-            }
-            self.searchField.text = ""
-        }
+    @IBAction func onHistoryTap(sender: AnyObject) {
+        HistoryManager.showHistoryView()
     }
+    
+//    @IBAction func onClearTap(sender: AnyObject) {
+//        GalleryManager.clearFlickrData {
+//            if let cView = self.collectionView {
+//                cView.reloadData()
+//            }
+//            self.searchField.text = ""
+//        }
+//    }
     
     @IBAction func onSearchTap(sender: AnyObject) {
         doSearch()
