@@ -20,5 +20,5 @@ class RealmFlickrPhoto: Object {
     dynamic var isFamily:Bool = false
     dynamic var isFriend:Bool = false
     dynamic var isPublic:Bool = false
-    
+    dynamic var thumbnailTimestamp:Double = 0.0
 }

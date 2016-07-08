@@ -37,8 +37,12 @@ class PhotoManager {
     static func setInitialPhotoVCInfo(photoVC:PhotoViewController, flickrPhoto:FlickrPhoto) {
         photoVC.navigationItem.title = flickrPhoto.title
         photoVC.thumbnail = flickrPhoto.thumbnail
-        photoVC.largeImage = flickrPhoto.largeImage
-        photoVC.view.showLoadingView()
+        if let largeImg = flickrPhoto.largeImage {
+            photoVC.largeImage = largeImg
+        } else {
+            photoVC.view.showLoadingView()
+        }
+        
     }
     
     static func setPhotoVCAnimatorInfo(flickrPhoto:FlickrPhoto, photoVC:PhotoViewController, zoomOriginFrame:CGRect? = nil) {

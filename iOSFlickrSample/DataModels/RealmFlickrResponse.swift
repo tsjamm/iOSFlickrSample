@@ -18,6 +18,8 @@ class RealmFlickrResponse:Object {
     dynamic var searchTerm:String = ""
     dynamic var isCached:Bool = true
     
+    dynamic var timestamp:Double = 0.0
+    
     let photos = List<RealmFlickrPhoto>()
     
 }

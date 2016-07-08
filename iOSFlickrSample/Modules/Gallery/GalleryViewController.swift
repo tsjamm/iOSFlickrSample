@@ -13,7 +13,7 @@ class GalleryViewController: BaseViewController {
     private let reuseIdentifier = "PicCell"
     private let sectionIdentifier = "SecHeader"
     
-    private let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
+    private let sectionInsets = UIEdgeInsets(top: 20.0, left: 10.0, bottom: 20.0, right: 10.0)
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchField: UITextField!
@@ -79,7 +79,7 @@ extension GalleryViewController:UICollectionViewDataSource {
     /// DataSource methods, the protocol does not need to be explicitly added.
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! FlickrPhotoCell
-        GalleryManager.setCellInfo(cell, indexPath: indexPath)
+        GalleryManager.setCellInfo(cell, indexPath: indexPath, collectionView:collectionView)
         return cell
     }
     

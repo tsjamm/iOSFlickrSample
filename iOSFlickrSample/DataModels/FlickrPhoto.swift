@@ -25,7 +25,12 @@ class FlickrPhoto {
     var mediumImage:UIImage? = nil
     var largeImage:UIImage? = nil
     
+    var thumbnailTimestamp:NSTimeInterval!
+    
     init(dataMap:[String:AnyObject], downloadThumb:Bool = true) {
+        
+        self.thumbnailTimestamp = NSDate().timeIntervalSince1970
+        
         self.farm = dataMap["farm"] as? Int
         self.id = dataMap["id"] as? String
         self.isFamily = dataMap["isfamily"] as? Bool
@@ -47,6 +52,7 @@ class FlickrPhoto {
         self.secret = realmFlickrPhoto.secret
         self.server = realmFlickrPhoto.server
         self.title = realmFlickrPhoto.title
+        self.thumbnailTimestamp = realmFlickrPhoto.thumbnailTimestamp
     }
     
     func toRealmFlickrPhoto() -> RealmFlickrPhoto {
@@ -79,6 +85,8 @@ class FlickrPhoto {
         if let unwrapped = self.title {
             toReturn.title = unwrapped
         }
+        
+        toReturn.thumbnailTimestamp = self.thumbnailTimestamp
         
         return toReturn
     }

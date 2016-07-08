@@ -57,7 +57,7 @@ class FlickrNetworkManager {
         
         let fResponse = FlickrResponse(dataMap: photosMap)
         
-        downloadImages(fResponse)
+        //downloadImages(fResponse)
         
         return fResponse
         

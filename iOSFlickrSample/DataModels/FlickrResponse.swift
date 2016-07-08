@@ -20,7 +20,11 @@ class FlickrResponse {
     var searchTerm:String = ""
     var isCached:Bool = false
     
+    var timestamp:NSTimeInterval!
+    
     init(dataMap:[String:AnyObject]) {
+        self.timestamp = NSDate().timeIntervalSince1970
+        
         self.page = dataMap["page"] as? Int
         self.pages = dataMap["pages"] as? Int
         self.perPage = dataMap["perpage"] as? Int
@@ -41,6 +45,8 @@ class FlickrResponse {
         
         self.searchTerm = realmFlickrResponse.searchTerm
         self.isCached = true
+        
+        self.timestamp = realmFlickrResponse.timestamp
         
         for realmPhoto in realmFlickrResponse.photos {
             self.photo.append(FlickrPhoto(realmFlickrPhoto: realmPhoto))
@@ -63,7 +69,7 @@ class FlickrResponse {
         }
         
         realmFlickrResponse.searchTerm = self.searchTerm
-        
+        realmFlickrResponse.timestamp = self.timestamp
         
         for flickrPhoto in self.photo {
             if let photoId = flickrPhoto.id, let retrievedRFP = FlickrPhoto.retrieveFromRealm(photoId) {
