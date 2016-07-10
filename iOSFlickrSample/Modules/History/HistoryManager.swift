@@ -11,20 +11,7 @@ import RealmSwift
 
 class HistoryManager {
     
-    static var historyList = [String]()
-    
-    static func showHistoryView() {
-        if let historyVC = UIStoryboard(name: "History", bundle: nil).instantiateViewControllerWithIdentifier(Constants.StoryBoardVCID.HistoryViewController.rawValue) as? HistoryViewController {
-            
-            updateHistoryList()
-            
-            historyVC.navigationItem.title = "Your History"
-            let transitionAnimator = TranslateAnimator()
-            transitionAnimator.setOriginState(Constants.TransitionDirection.LeftToRight)
-            historyVC.transitionAnimator = transitionAnimator
-            BaseNavigationController.getInstance().pushViewController(historyVC, animated: true)
-        }
-    }
+    private static var historyList = [String]()
     
     static func updateHistoryList() {
         historyList.removeAll()
@@ -41,6 +28,11 @@ class HistoryManager {
         
     }
     
+    static func getUpdatedHistoryList() -> [String] {
+        updateHistoryList()
+        return self.historyList
+    }
+    
     static func deleteSearch(indexPath:NSIndexPath) {
         let row = indexPath.row
         let searchTerm = historyList[row]
@@ -51,25 +43,6 @@ class HistoryManager {
     static func clearAllSearchesFromDB() {
         FlickrDataManager.clearAllFlickrData()
         GalleryManager.clearSearches()
-        GalleryManager.showGalleryView()
-    }
-    
-    static func getNumberOfSections() -> Int {
-        return 1
-    }
-    
-    static func getNumberOfRows(section:Int) -> Int {
-        return historyList.count
-    }
-    
-    static func getSearchTerm(indexPath:NSIndexPath) -> String {
-        let row = indexPath.row
-        return historyList[row]
-    }
-    
-    static func didSelectRow(indexPath:NSIndexPath) {
-        let searchTerm = getSearchTerm(indexPath)
-        GalleryManager.showGalleryView(searchTerm)
     }
     
 }

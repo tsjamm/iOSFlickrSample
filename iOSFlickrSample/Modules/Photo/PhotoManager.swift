@@ -10,31 +10,7 @@ import UIKit
 
 class PhotoManager {
     
-    static func showPhotoView(flickrPhoto:FlickrPhoto, zoomOriginFrame:CGRect?=nil) {
-        
-        if let photoVC = UIStoryboard(name: "Photo", bundle: nil).instantiateViewControllerWithIdentifier(Constants.StoryBoardVCID.PhotoViewController.rawValue) as? PhotoViewController {
-            
-            setInitialPhotoVCInfo(photoVC, flickrPhoto: flickrPhoto)
-            
-            updateLargeImageInPhoto(flickrPhoto, callback: { 
-                //photoVC.imageView.image = flickrPhoto.largeImage
-                photoVC.imageView.setImageWithAnimation(flickrPhoto.largeImage)
-                photoVC.view.removeLoadingView()
-                setPhotoVCAnimatorInfo(flickrPhoto, photoVC: photoVC, zoomOriginFrame: zoomOriginFrame)
-            })
-            
-            setPhotoVCAnimatorInfo(flickrPhoto, photoVC: photoVC, zoomOriginFrame: zoomOriginFrame)
-            
-            
-            BaseNavigationController.getInstance().pushViewController(photoVC, animated: true)
-//            if let pVC = presentingVC {
-//                pVC.presentViewController(photoVC, animated: true, completion: nil)
-//            }
-        }
-        
-    }
-    
-    static func setInitialPhotoVCInfo(photoVC:PhotoViewController, flickrPhoto:FlickrPhoto) {
+    static func setInitialPhotoVCInfo(photoVC:PhotoDetailViewController, flickrPhoto:FlickrPhoto) {
         photoVC.navigationItem.title = flickrPhoto.title
         photoVC.thumbnail = flickrPhoto.thumbnail
         if let largeImg = flickrPhoto.largeImage {
@@ -45,7 +21,7 @@ class PhotoManager {
         
     }
     
-    static func setPhotoVCAnimatorInfo(flickrPhoto:FlickrPhoto, photoVC:PhotoViewController, zoomOriginFrame:CGRect? = nil) {
+    static func setPhotoVCAnimatorInfo(flickrPhoto:FlickrPhoto, photoVC:PhotoDetailViewController, zoomOriginFrame:CGRect? = nil) {
         if let originFrame = zoomOriginFrame {
             let animator = ZoomAnimator()
             var originImg:UIImage? = nil

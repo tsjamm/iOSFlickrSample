@@ -20,7 +20,7 @@ struct Constants {
     }
     
     enum StoryBoardVCID:String {
-        case PhotoViewController
+        case PhotoDetailViewController
         case GalleryViewController
         case HistoryViewController
     }
@@ -30,5 +30,10 @@ struct Constants {
         case RightToLeft
         case TopToBottom
         case BottomToTop
+    }
+    
+    enum SegueId:String {
+        case GalleryToPhoto
+        case GalleryToHistory
     }
 }

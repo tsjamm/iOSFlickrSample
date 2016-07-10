@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="e9O-Yd-kdP">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Photo View Controller-->
+        <!--Photo Detail View Controller-->
         <scene sceneID="0vZ-LJ-vsH">
             <objects>
-                <viewController storyboardIdentifier="PhotoViewController" id="e9O-Yd-kdP" customClass="PhotoViewController" customModule="iOSFlickrSample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PhotoDetailViewController" id="e9O-Yd-kdP" customClass="PhotoDetailViewController" customModule="iOSFlickrSample" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="K9I-Mh-ArK"/>
                         <viewControllerLayoutGuide type="bottom" id="B1d-DE-pPc"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="ZU9-lw-tc8">
+                    <view key="view" contentMode="scaleToFill" id="ZU9-lw-tc8" customClass="PhotoDetailView" customModule="iOSFlickrSample" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -30,10 +30,14 @@
                             <constraint firstItem="WDs-qt-g69" firstAttribute="leading" secondItem="ZU9-lw-tc8" secondAttribute="leading" id="p0s-pk-3YI"/>
                             <constraint firstItem="B1d-DE-pPc" firstAttribute="top" secondItem="WDs-qt-g69" secondAttribute="bottom" id="vbD-uc-7k5"/>
                         </constraints>
+                        <connections>
+                            <outlet property="imageView" destination="WDs-qt-g69" id="Gk4-Id-rr1"/>
+                        </connections>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="imageView" destination="WDs-qt-g69" id="4zc-19-l3S"/>
+                        <outlet property="photoDetailView" destination="ZU9-lw-tc8" id="uP1-Ux-CRd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bz3-Va-Zr1" userLabel="First Responder" sceneMemberID="firstResponder"/>

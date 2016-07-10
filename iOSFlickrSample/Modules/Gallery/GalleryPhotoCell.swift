@@ -1,5 +1,5 @@
 //
-//  FlickrPhotoCell.swift
+//  GalleryPhotoCell.swift
 //  iOSFlickrSample
 //
 //  Created by Sai Teja Jammalamadaka on 7/5/16.
@@ -9,7 +9,7 @@
 import UIKit
 
 /// This is the photo cell in the collection view
-class FlickrPhotoCell: UICollectionViewCell {
+class GalleryPhotoCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
     
