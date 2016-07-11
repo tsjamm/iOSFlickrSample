@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GalleryViewModel: GalleryViewDataSource {
+struct GalleryViewModel: GalleryViewDataSource {
     
     private let numberOfSections = 1
     
@@ -30,35 +30,28 @@ class GalleryViewModel: GalleryViewDataSource {
     
     func configureCellAtIndexPath(collectionView:UICollectionView, cell: GalleryPhotoCell, indexPath: NSIndexPath) {
         cell.backgroundColor = UIColor.lightGrayColor()
-        
         let row = indexPath.row
-        
         if row < self.numberOfCells {
             let fPhoto = self.flickrResponse.photo[row]
             if let fThumb = fPhoto.thumbnail {
                 cell.removeLoadingView()
                 cell.imageView.image = fThumb
-            } else if !self.flickrResponse.isCached { /// not downloading if cached response (not worth it)
+            /// not downloading thumb if cached response without thumb (not worth it)
+            } else if !self.flickrResponse.isCached,
+                let thumbURL = fPhoto.getThumbnailURL() {
                 cell.showLoadingView()
-                FlickrNetworkManager.downloadImageAsync(fPhoto, size: Constants.FlickrPhotoSize.Small.rawValue, callback: { (image) in
-                    fPhoto.thumbnail = image
-                    fPhoto.thumbnailTimestamp = NSDate().timeIntervalSince1970
-                    if let asyncFCell = collectionView.cellForItemAtIndexPath(indexPath) as? GalleryPhotoCell {
-                        //if fPhoto.thumbnailTimestamp > asyncFCell.imageTimestamp {
-                        asyncFCell.imageView.image = image
-                        
-                        asyncFCell.removeLoadingView()
-                        //}
-                        asyncFCell.removeLoadingView()
-                    }
-                    
+                cell.imageView.af_setImageWithURL(thumbURL,
+                                                  imageTransition: UIImageView.ImageTransition.CrossDissolve(0.2),
+                                                  runImageTransitionIfCached: true,
+                                                  completion: { (alamofireResponse) in
+                    fPhoto.thumbnail = alamofireResponse.result.value
+                    cell.removeLoadingView()
                 })
             }
         }
     }
     
     func configureSectionHeaderAtIndexPath(collectionView:UICollectionView, sectionHeader: GallerySectionHeaderView, indexPath: NSIndexPath) {
-        
         sectionHeader.headerLabel.text = self.flickrResponse.searchTerm
         sectionHeader.isLoading = self.flickrResponse.isCached
     }

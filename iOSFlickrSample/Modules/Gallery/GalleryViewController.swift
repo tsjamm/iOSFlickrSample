@@ -57,14 +57,6 @@ class GalleryViewController: BaseViewController {
                             let zoomOriginFrame = self.galleryView.collectionView.getRelativeCellFrameInSuperView(indexPath)
                             
                             PhotoManager.setInitialPhotoVCInfo(photoVC, flickrPhoto: flickrPhoto)
-                            
-                            PhotoManager.updateLargeImageInPhoto(flickrPhoto, callback: {
-                                //photoVC.imageView.image = flickrPhoto.largeImage
-                                photoVC.imageView.setImageWithAnimation(flickrPhoto.largeImage)
-                                photoVC.view.removeLoadingView()
-                                PhotoManager.setPhotoVCAnimatorInfo(flickrPhoto, photoVC: photoVC, zoomOriginFrame: zoomOriginFrame)
-                            })
-                            
                             PhotoManager.setPhotoVCAnimatorInfo(flickrPhoto, photoVC: photoVC, zoomOriginFrame: zoomOriginFrame)
                         }
                     }

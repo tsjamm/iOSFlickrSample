@@ -22,15 +22,12 @@ class FlickrPhoto {
     let title:String?
     
     var thumbnail:UIImage? = nil
-    var mediumImage:UIImage? = nil
-    var largeImage:UIImage? = nil
+//    var mediumImage:UIImage? = nil
+//    var largeImage:UIImage? = nil
     
-    var thumbnailTimestamp:NSTimeInterval!
+    /// MARK:- Initializers
     
     init(dataMap:[String:AnyObject], downloadThumb:Bool = true) {
-        
-        self.thumbnailTimestamp = NSDate().timeIntervalSince1970
-        
         self.farm = dataMap["farm"] as? Int
         self.id = dataMap["id"] as? String
         self.isFamily = dataMap["isfamily"] as? Bool
@@ -52,8 +49,42 @@ class FlickrPhoto {
         self.secret = realmFlickrPhoto.secret
         self.server = realmFlickrPhoto.server
         self.title = realmFlickrPhoto.title
-        self.thumbnailTimestamp = realmFlickrPhoto.thumbnailTimestamp
     }
+    
+    /// MARK:- Image URL getters
+    
+    func getThumbnailURL() -> NSURL? {
+        if let toReturn = getImageURL(Constants.FlickrPhotoSize.Small.rawValue) {
+            return toReturn
+        }
+        return nil
+    }
+    
+    func getMediumURL() -> NSURL? {
+        if let toReturn = getImageURL(Constants.FlickrPhotoSize.Medium.rawValue) {
+            return toReturn
+        }
+        return nil
+    }
+    
+    func getLargeURL() -> NSURL? {
+        if let toReturn = getImageURL(Constants.FlickrPhotoSize.Big.rawValue) {
+            return toReturn
+        }
+        return nil
+    }
+    
+    private func getImageURL(size:String) -> NSURL? {
+        guard let farm = self.farm else { return nil }
+        guard let server = self.server else { return nil }
+        guard let photoID = self.id else { return nil }
+        guard let secret = self.secret else { return nil }
+        
+        let urlString = "https://farm\(farm).staticflickr.com/\(server)/\(photoID)_\(secret)_\(size).jpg"
+        return NSURL(string: urlString)
+    }
+    
+    /// MARK:- Realm Utility Methods
     
     func toRealmFlickrPhoto() -> RealmFlickrPhoto {
         let toReturn = RealmFlickrPhoto()
@@ -85,8 +116,6 @@ class FlickrPhoto {
         if let unwrapped = self.title {
             toReturn.title = unwrapped
         }
-        
-        toReturn.thumbnailTimestamp = self.thumbnailTimestamp
         
         return toReturn
     }

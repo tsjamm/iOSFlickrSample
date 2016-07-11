@@ -22,7 +22,7 @@ class FlickrResponse {
     
     var timestamp:NSTimeInterval!
     
-    init(dataMap:[String:AnyObject]) {
+    init(dataMap: [String:AnyObject]) {
         self.timestamp = NSDate().timeIntervalSince1970
         
         self.page = dataMap["page"] as? Int
@@ -37,7 +37,7 @@ class FlickrResponse {
         }
     }
     
-    init(realmFlickrResponse:RealmFlickrResponse) {
+    init(realmFlickrResponse: RealmFlickrResponse) {
         self.page = realmFlickrResponse.page
         self.pages = realmFlickrResponse.pages
         self.perPage = realmFlickrResponse.perPage
@@ -53,8 +53,7 @@ class FlickrResponse {
         }
     }
     
-    func toRealmFlickrResponse(realmFlickrResponse:RealmFlickrResponse=RealmFlickrResponse()) -> RealmFlickrResponse {
-        //let realmFlickrResponse = RealmFlickrResponse()
+    func toRealmFlickrResponse(realmFlickrResponse: RealmFlickrResponse = RealmFlickrResponse()) -> RealmFlickrResponse {
         if let toStore = self.page {
             realmFlickrResponse.page = toStore
         }
@@ -109,7 +108,7 @@ class FlickrResponse {
         }
     }
     
-    static func retrieveFromRealm(searchTerm:String) -> RealmFlickrResponse? {
+    static func retrieveFromRealm(searchTerm: String) -> RealmFlickrResponse? {
         do {
             let realm = try Realm()
             let predicate = NSPredicate(format: "searchTerm = %@", searchTerm)
@@ -120,7 +119,7 @@ class FlickrResponse {
         return nil
     }
     
-    static func deleteFromRealm(searchTerm:String) {
+    static func deleteFromRealm(searchTerm: String) {
         do {
             let realm = try Realm()
             let predicate = NSPredicate(format: "searchTerm = %@", searchTerm)

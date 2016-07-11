@@ -57,55 +57,8 @@ class FlickrNetworkManager {
         
         let fResponse = FlickrResponse(dataMap: photosMap)
         
-        //downloadImages(fResponse)
-        
         return fResponse
         
-    }
-    
-    private static func downloadImages(flickrResponse:FlickrResponse) {
-        for photo in flickrResponse.photo {
-            photo.thumbnail = downloadImage(photo, size: Constants.FlickrPhotoSize.Small.rawValue)
-            //photo.mediumImage = downloadImage(photo, size: "m")
-            //photo.largeImage = downloadImage(photo, size: "b")
-        }
-    }
-    
-    static func downloadLargeImage(flickerPhoto:FlickrPhoto) {
-        flickerPhoto.largeImage = downloadImage(flickerPhoto, size: Constants.FlickrPhotoSize.Big.rawValue)
-    }
-    
-    static func getFlickrImageUrl(flickrPhoto:FlickrPhoto, size:String=Constants.FlickrPhotoSize.Small.rawValue) -> NSURL? {
-        guard let farm = flickrPhoto.farm else { return nil }
-        guard let server = flickrPhoto.server else { return nil }
-        guard let photoID = flickrPhoto.id else { return nil }
-        guard let secret = flickrPhoto.secret else { return nil }
-        
-        let urlString = "https://farm\(farm).staticflickr.com/\(server)/\(photoID)_\(secret)_\(size).jpg"
-        return NSURL(string: urlString)
-    }
-    
-    private static func downloadImage(flickrPhoto:FlickrPhoto, size:String) -> UIImage? {
-        if let flickrThumbURL = getFlickrImageUrl(flickrPhoto, size:size) {
-            if let imageData = NSData(contentsOfURL: flickrThumbURL) {
-                return UIImage(data: imageData)
-            } else {
-                NSLog("Error: Unable to fetch Flickr Image data.")
-            }
-        } else {
-            NSLog("Error: Flickr Image URL not correct.")
-        }
-        return nil
-    }
-    
-    static func downloadImageAsync(flickrPhoto:FlickrPhoto, size:String, callback:((image:UIImage)->())) {
-        if let flickLargeURL = getFlickrImageUrl(flickrPhoto, size:Constants.FlickrPhotoSize.Big.rawValue) {
-            Alamofire.request(.GET, flickLargeURL).responseImage(completionHandler: { (response) in
-                if let image = response.result.value {
-                    callback(image: image)
-                }
-            })
-        }
     }
     
 }

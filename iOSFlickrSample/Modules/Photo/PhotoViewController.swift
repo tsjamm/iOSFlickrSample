@@ -11,12 +11,15 @@ import UIKit
 /// The photo view controller that shows the big image for a thumbnail
 class PhotoDetailViewController:BaseViewController {
 
-    @IBOutlet var photoDetailView: PhotoDetailView!
+    @IBOutlet var photoDetailView: PhotoDetailView! {
+        didSet {
+            if let fP = self.flickrPhoto {
+                photoDetailView.dataSource = PhotoDetailViewModel(flickrPhoto: fP)
+            }
+        }
+    }
     
-    
-    @IBOutlet weak var imageView: UIImageView!
-    var thumbnail:UIImage? = nil
-    var largeImage:UIImage? = nil
+    var flickrPhoto:FlickrPhoto? = nil
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -24,12 +27,6 @@ class PhotoDetailViewController:BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if let lI = largeImage {
-            self.imageView.image = lI
-        } else if let thumb = thumbnail {
-            self.imageView.image = thumb
-        }
     }
 
 }

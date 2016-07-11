@@ -13,7 +13,7 @@ protocol GalleryViewDelegate: class {
     func scrollViewWillBeginDragging(scrollView: UIScrollView)
 }
 
-protocol GalleryViewDataSource: class {
+protocol GalleryViewDataSource {
     func getNumberOfSections() -> Int
     func getNumberOfCellsForSection(section:Int) -> Int
     func configureCellAtIndexPath(collectionView:UICollectionView, cell:GalleryPhotoCell, indexPath: NSIndexPath)

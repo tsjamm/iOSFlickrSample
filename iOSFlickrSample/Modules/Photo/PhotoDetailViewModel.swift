@@ -10,8 +10,18 @@ import UIKit
 
 class PhotoDetailViewModel:PhotoDetailViewDataSource {
     
-    func getImageForDisplay() -> UIImage? {
-        return nil
+    var flickrPhoto:FlickrPhoto!
+    
+    init(flickrPhoto:FlickrPhoto) {
+        self.flickrPhoto = flickrPhoto
+    }
+    
+    func largeImageURL() -> NSURL? {
+        return self.flickrPhoto.getLargeURL()
+    }
+    
+    func placeHolderImage() -> UIImage? {
+        return flickrPhoto.thumbnail
     }
     
 }

@@ -9,19 +9,22 @@
 import UIKit
 
 protocol PhotoDetailViewDataSource: class {
-    func getImageForDisplay() -> UIImage?
+    func placeHolderImage() -> UIImage?
+    func largeImageURL() -> NSURL?
 }
 
 class PhotoDetailView: UIView {
     
-    var dataSource:PhotoDetailViewDataSource? {
+    var dataSource: PhotoDetailViewDataSource? {
         didSet {
-            imageView.image = dataSource?.getImageForDisplay()
+            guard let largeUrl = dataSource?.largeImageURL() else { return }
+            imageView.af_setImageWithURL(largeUrl,
+                                         placeholderImage: dataSource?.placeHolderImage(),
+                                         imageTransition: .CrossDissolve(0.2),
+                                         runImageTransitionIfCached: true)
         }
     }
 
     @IBOutlet weak var imageView: UIImageView!
-    
-    
     
 }

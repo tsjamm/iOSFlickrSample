@@ -36,7 +36,6 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <outlet property="imageView" destination="WDs-qt-g69" id="4zc-19-l3S"/>
                         <outlet property="photoDetailView" destination="ZU9-lw-tc8" id="uP1-Ux-CRd"/>
                     </connections>
                 </viewController>
