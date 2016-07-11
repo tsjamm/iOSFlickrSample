@@ -17,7 +17,7 @@ class HistoryManager {
         historyList.removeAll()
         do {
             let realm = try Realm()
-            let rFRList = realm.objects(RealmFlickrResponse.self)
+            let rFRList = realm.objects(RealmFlickrResponse.self).sorted("timestamp", ascending: false)
             for rFR in rFRList {
                 let searchTerm = rFR.searchTerm
                 historyList.append(searchTerm)
