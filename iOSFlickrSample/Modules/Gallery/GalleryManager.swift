@@ -12,8 +12,8 @@ class GalleryManager {
     
     private static var currentSearchTerm: String = ""
     
-    static func getNumberOfPhotos(forSearchIndex:Int) -> Int {
-        return FlickrDataManager.getCachedFlickrResponse(currentSearchTerm)?.photo.count ?? 0
+    static func clearSearch() {
+        self.currentSearchTerm = ""
     }
     
     static func getFlickrPhotoForIndexPath(indexPath:NSIndexPath) -> FlickrPhoto? {
