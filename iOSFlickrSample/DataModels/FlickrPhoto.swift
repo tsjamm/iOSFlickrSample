@@ -22,8 +22,6 @@ class FlickrPhoto {
     let title:String?
     
     var thumbnail:UIImage? = nil
-//    var mediumImage:UIImage? = nil
-//    var largeImage:UIImage? = nil
     
     /// MARK:- Initializers
     

@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol HistoryViewControllerDelegate: class {
+    func didTapOnHistoricalSearch(searchTerm: String)
+    func didTapOnClearHistory()
+}
+
 class HistoryViewController: BaseViewController {
     
     @IBOutlet var historyView: HistoryView! {
@@ -16,6 +21,7 @@ class HistoryViewController: BaseViewController {
             historyView.dataSource = HistoryViewModel(historyList: HistoryManager.getUpdatedHistoryList())
         }
     }
+    weak var delegate: HistoryViewControllerDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -33,6 +39,7 @@ class HistoryViewController: BaseViewController {
     @IBAction func onClearTap(sender: AnyObject) {
         HistoryManager.clearAllSearchesFromDB()
         self.historyView.dataSource = HistoryViewModel(historyList: HistoryManager.getUpdatedHistoryList())
+        delegate?.didTapOnClearHistory()
     }
     
     @IBAction func onEditTap(sender: AnyObject) {
@@ -42,11 +49,21 @@ class HistoryViewController: BaseViewController {
             self.historyView.tableView.setEditing(true, animated: true)
         }
     }
+    
+    override func performSegueWithIdentifier(identifier: String, sender: AnyObject?) {
+        if identifier == Constants.SegueId.GalleryToHistory.rawValue {
+            NSLog("HistoryView:: segue with id=\(identifier) being called...")
+        }
+    }
 }
 
 extension HistoryViewController: HistoryViewDelegate {
     func didTapOnCellAtIndexPath(tableView: UITableView, indexPath: NSIndexPath) {
-        //HistoryManager.didSelectRow(indexPath)
+        if let cell = tableView.cellForRowAtIndexPath(indexPath) {
+            if let searchTerm = cell.textLabel?.text {
+                delegate?.didTapOnHistoricalSearch(searchTerm)
+            }
+        }
     }
     
     func commitEditingStyleAtIndexPath(tableView: UITableView, editingStyle: UITableViewCellEditingStyle, indexPath: NSIndexPath) {

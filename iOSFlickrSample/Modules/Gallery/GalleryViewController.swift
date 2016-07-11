@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// The Gallery View Controller presents a collection view of the images searched for by the search field.
 class GalleryViewController: BaseViewController {
 
     @IBOutlet var galleryView: GalleryView! {
@@ -31,6 +32,7 @@ class GalleryViewController: BaseViewController {
             return
         }
         searchField.resignFirstResponder()
+        searchField.text = ""
         galleryView.showLoadingView()
         GalleryManager.fetchFlickrData(text) { (fResponse) in
             self.galleryView.dataSource = GalleryViewModel(flickrResponse: fResponse)
@@ -40,6 +42,7 @@ class GalleryViewController: BaseViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         galleryView.invalidateLayout()
+        //NSLog("GalleryVC: view will layout subviews")
     }
     
     @IBAction func onSearchTap(sender: AnyObject) {
@@ -62,11 +65,15 @@ class GalleryViewController: BaseViewController {
                     }
                 }
             }
-            
+        } else if segue.identifier == Constants.SegueId.GalleryToHistory.rawValue {
+            if let historyVC = segue.destinationViewController as? HistoryViewController {
+                historyVC.delegate = self
+            }
         }
     }
 }
 
+/// This is for when the searchbar is handled (It is present in Navigation Item, hence not in Gallery View)
 extension GalleryViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -77,13 +84,27 @@ extension GalleryViewController: UITextFieldDelegate {
     }
 }
 
+/// This is for when the user does something in the GalleryView
 extension GalleryViewController: GalleryViewDelegate {
     
     func didTapOnCellAtIndexPath(collectionView: UICollectionView, indexPath: NSIndexPath) {
-        
+        // the storyboard segue is currently showing the photo view controller.
     }
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         self.searchField.resignFirstResponder()
+    }
+}
+
+/// This is for when user does something in the History View Controller
+extension GalleryViewController: HistoryViewControllerDelegate {
+    func didTapOnClearHistory() {
+        self.galleryView.reloadCollectionView()
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    func didTapOnHistoricalSearch(searchTerm: String) {
+        doSearchFor(searchTerm)
+        self.navigationController?.popViewControllerAnimated(true)
     }
 }
