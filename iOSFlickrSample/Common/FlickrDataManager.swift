@@ -25,7 +25,7 @@ class FlickrDataManager {
         FlickrNetworkManager.fetchFlickrDataFromNetwork(searchTerm) { (flickrResponse) in
             
             flickrReponseMap[searchTerm] = flickrResponse
-            flickrResponse.updateInRealm()
+            FlickrRealmManager.updateFlickrResponseInRealm(searchTerm, newFlickrResponse: flickrResponse)
             
             callback(flickrResponse)
             
@@ -36,8 +36,7 @@ class FlickrDataManager {
     static func getCachedFlickrResponse(searchTerm:String) -> FlickrResponse? {
         if let cachedResponse = flickrReponseMap[searchTerm] {
             return cachedResponse
-        } else if let realmResponse = FlickrResponse.retrieveFromRealm(searchTerm) {
-            let cachedResponse = FlickrResponse(realmFlickrResponse:realmResponse)
+        } else if let cachedResponse = FlickrRealmManager.retrieveFlickrResponseFromRealm(searchTerm) {
             flickrReponseMap[searchTerm] = cachedResponse
             return cachedResponse
         }

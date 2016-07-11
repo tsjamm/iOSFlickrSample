@@ -11,6 +11,16 @@ import RealmSwift
 
 class FlickrPhoto {
     
+    static let KEY_FARM = "farm"
+    static let KEY_ID = "id"
+    static let KEY_IS_FAMILY = "isfamily"
+    static let KEY_IS_FRIEND = "isfriend"
+    static let KEY_IS_PUBLIC = "ispublic"
+    static let KEY_OWNER = "owner"
+    static let KEY_SECRET = "secret"
+    static let KEY_SERVER = "server"
+    static let KEY_TITLE = "title"
+    
     let farm:Int?
     let id:String?
     let isFamily:Bool?
@@ -26,27 +36,15 @@ class FlickrPhoto {
     /// MARK:- Initializers
     
     init(dataMap:[String:AnyObject], downloadThumb:Bool = true) {
-        self.farm = dataMap["farm"] as? Int
-        self.id = dataMap["id"] as? String
-        self.isFamily = dataMap["isfamily"] as? Bool
-        self.isFriend = dataMap["isfriend"] as? Bool
-        self.isPublic = dataMap["ispublic"] as? Bool
-        self.owner = dataMap["owner"] as? String
-        self.secret = dataMap["secret"] as? String
-        self.server = dataMap["server"] as? String
-        self.title = dataMap["title"] as? String
-    }
-    
-    init(realmFlickrPhoto:RealmFlickrPhoto) {
-        self.farm = realmFlickrPhoto.farm
-        self.id = realmFlickrPhoto.id
-        self.isFamily = realmFlickrPhoto.isFamily
-        self.isFriend = realmFlickrPhoto.isFriend
-        self.isPublic = realmFlickrPhoto.isPublic
-        self.owner = realmFlickrPhoto.owner
-        self.secret = realmFlickrPhoto.secret
-        self.server = realmFlickrPhoto.server
-        self.title = realmFlickrPhoto.title
+        self.farm = dataMap[FlickrPhoto.KEY_FARM] as? Int
+        self.id = dataMap[FlickrPhoto.KEY_ID] as? String
+        self.isFamily = dataMap[FlickrPhoto.KEY_IS_FAMILY] as? Bool
+        self.isFriend = dataMap[FlickrPhoto.KEY_IS_FRIEND] as? Bool
+        self.isPublic = dataMap[FlickrPhoto.KEY_IS_PUBLIC] as? Bool
+        self.owner = dataMap[FlickrPhoto.KEY_OWNER] as? String
+        self.secret = dataMap[FlickrPhoto.KEY_SECRET] as? String
+        self.server = dataMap[FlickrPhoto.KEY_SERVER] as? String
+        self.title = dataMap[FlickrPhoto.KEY_TITLE] as? String
     }
     
     /// MARK:- Image URL getters
@@ -82,64 +80,4 @@ class FlickrPhoto {
         return NSURL(string: urlString)
     }
     
-    /// MARK:- Realm Utility Methods
-    
-    func toRealmFlickrPhoto() -> RealmFlickrPhoto {
-        let toReturn = RealmFlickrPhoto()
-        
-        if let unwrapped = self.farm {
-            toReturn.farm = unwrapped
-        }
-        if let unwrapped = self.id {
-            toReturn.id = unwrapped
-        }
-        if let unwrapped = self.isFamily {
-            toReturn.isFamily = unwrapped
-        }
-        if let unwrapped = self.isFriend {
-            toReturn.isFriend = unwrapped
-        }
-        if let unwrapped = self.isPublic {
-            toReturn.isPublic = unwrapped
-        }
-        if let unwrapped = self.owner {
-            toReturn.owner = unwrapped
-        }
-        if let unwrapped = self.secret {
-            toReturn.secret = unwrapped
-        }
-        if let unwrapped = self.server {
-            toReturn.server = unwrapped
-        }
-        if let unwrapped = self.title {
-            toReturn.title = unwrapped
-        }
-        
-        return toReturn
-    }
-    
-    func storeInRealm() {
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) {
-            do {
-                let realm = try Realm()
-                try realm.write({
-                    realm.add(self.toRealmFlickrPhoto())
-                })
-            } catch _ {
-                NSLog("Error: Realm write failed for RealmFlickrResponse")
-            }
-            
-        }
-    }
-    
-    static func retrieveFromRealm(id:String) -> RealmFlickrPhoto? {
-        do {
-            let realm = try Realm()
-            let predicate = NSPredicate(format: "id = %@", id)
-            return realm.objects(RealmFlickrPhoto.self).filter(predicate).first
-        } catch {
-            NSLog("Error: Realm read failed for RealmFlickrPhoto\n\(error)")
-        }
-        return nil
-    }
 }

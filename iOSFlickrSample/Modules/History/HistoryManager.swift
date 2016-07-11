@@ -37,7 +37,7 @@ class HistoryManager {
         let row = indexPath.row
         let searchTerm = historyList[row]
         historyList.removeAtIndex(row)
-        FlickrResponse.deleteFromRealm(searchTerm)
+        FlickrRealmManager.deleteFlickrResponseFromRealm(searchTerm)
     }
     
     static func clearAllSearchesFromDB() {

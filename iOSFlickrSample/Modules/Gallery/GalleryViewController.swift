@@ -99,7 +99,7 @@ extension GalleryViewController: GalleryViewDelegate {
 /// This is for when user does something in the History View Controller
 extension GalleryViewController: HistoryViewControllerDelegate {
     func didTapOnClearHistory() {
-        self.galleryView.reloadCollectionView()
+        self.galleryView.dataSource = nil
         self.navigationController?.popViewControllerAnimated(true)
     }
     
