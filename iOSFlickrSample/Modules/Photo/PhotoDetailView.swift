@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol PhotoDetailViewDelegate: class {
+    func onDoubleTap()
+    func onPan()
+}
+
 protocol PhotoDetailViewDataSource: class {
     func placeHolderImage() -> UIImage?
     func largeImageURL() -> NSURL?
@@ -24,7 +29,18 @@ class PhotoDetailView: UIView {
                                          runImageTransitionIfCached: true)
         }
     }
+    var delegate: PhotoDetailViewDelegate?
 
     @IBOutlet weak var imageView: UIImageView!
     
+    @IBAction func onTap(sender:UITapGestureRecognizer) {
+        //
+        NSLog("Double Tapped on PhotoDetailView")
+        delegate?.onDoubleTap()
+    }
+    
+    @IBAction func onPan(sender:UIPanGestureRecognizer) {
+        NSLog("Pan Gesture on PhotoDetailView \(sender.translationInView(self))")
+        delegate?.onPan()
+    }
 }

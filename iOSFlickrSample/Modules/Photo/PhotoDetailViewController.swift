@@ -15,6 +15,7 @@ class PhotoDetailViewController:BaseViewController {
         didSet {
             if let fP = self.flickrPhoto {
                 photoDetailView.dataSource = PhotoDetailViewModel(flickrPhoto: fP)
+                photoDetailView.delegate = self
             }
         }
     }
@@ -27,6 +28,30 @@ class PhotoDetailViewController:BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationController?.hidesBarsOnTap = true
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        self.navigationController?.hidesBarsOnTap = false
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
 
+}
+
+extension PhotoDetailViewController: PhotoDetailViewDelegate {
+    func onDoubleTap() {
+        if let nVC = self.navigationController {
+            nVC.popViewControllerAnimated(true)
+        } else {
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+    }
+    
+    func onPan() {
+        //TODO:-
+    }
 }

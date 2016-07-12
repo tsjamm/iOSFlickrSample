@@ -34,7 +34,7 @@ class ZoomAnimator: BaseTransitionAnimator {
         
         let backgroundView = UIView()
         backgroundView.frame = finalFrame
-        backgroundView.backgroundColor = UIColor.whiteColor()
+        backgroundView.backgroundColor = UIColor.blackColor()
         
         containerView.addSubview(toVC.view)
         containerView.addSubview(backgroundView)
