@@ -52,7 +52,7 @@ class GalleryViewController: BaseViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == Constants.SegueId.GalleryToPhoto.rawValue {
+        if segue.identifier == Constants.StoryBoardSegueID.GalleryToPhoto {
             if let cell = sender as? GalleryPhotoCell {
                 if let indexPath = self.galleryView.collectionView.indexPathForCell(cell) {
                     if let flickrPhoto = GalleryManager.getFlickrPhotoForIndexPath(indexPath) {
@@ -65,7 +65,7 @@ class GalleryViewController: BaseViewController {
                     }
                 }
             }
-        } else if segue.identifier == Constants.SegueId.GalleryToHistory.rawValue {
+        } else if segue.identifier == Constants.StoryBoardSegueID.GalleryToHistory {
             if let historyVC = segue.destinationViewController as? HistoryViewController {
                 historyVC.delegate = self
             }
@@ -98,7 +98,7 @@ extension GalleryViewController: GalleryViewDelegate {
 
 /// This is for when user does something in the History View Controller
 extension GalleryViewController: HistoryViewControllerDelegate {
-    func didTapOnClearHistory() {
+    func searchHistoryCleared() {
         self.galleryView.dataSource = nil
         self.navigationController?.popViewControllerAnimated(true)
     }

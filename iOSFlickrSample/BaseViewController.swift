@@ -10,6 +10,8 @@ import UIKit
 
 class BaseViewController:UIViewController {
     
+    var transitionAnimator:BaseTransitionAnimator?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -22,13 +24,13 @@ class BaseViewController:UIViewController {
 extension BaseViewController:UIViewControllerTransitioningDelegate {
     func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         guard let tA = self.transitionAnimator else {return nil}
-        tA.doReverse = false
+        tA.transitionType = BaseTransitionType.presentDefault
         return tA
     }
     
     func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         guard let tA = self.transitionAnimator else {return nil}
-        tA.doReverse = true
+        tA.transitionType = BaseTransitionType.dismissDefault
         return tA
     }
 }

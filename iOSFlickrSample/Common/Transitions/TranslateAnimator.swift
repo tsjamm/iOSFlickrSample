@@ -9,17 +9,67 @@
 
 import UIKit
 
-class TranslateAnimator:BaseTransitionAnimator {
+//MARK: TransitionDirection
+enum TranslateTransitionDirection {
+    case toTop
+    case toRight
+    case toBottom
+    case toLeft
+    case fromTop
+    case fromRight
+    case fromBottom
+    case fromLeft
     
-    private var direction:Constants.TransitionDirection = Constants.TransitionDirection.LeftToRight
-    
-    init(isReverse:Bool=false) {
-        super.init()
-        self.doReverse = isReverse
-        self.duration = 0.4
+    func finalFrame(respectToInitialFrame frame: CGRect, forTransitionType type:BaseTransitionType) -> CGRect {
+        switch type {
+        case .presentDefault, .present(_):
+            return offsetTypeOne(frame)
+        case .dismissDefault, .dismiss(_):
+            return offsetTypeTwo(frame)
+        }
     }
     
-    func setOriginState(direction:Constants.TransitionDirection) {
+    func initialFrame(respectToFinalFrame frame: CGRect, forTransitionType type:BaseTransitionType) -> CGRect {
+        switch type {
+        case .presentDefault, .present(_):
+            return offsetTypeTwo(frame)
+        case .dismissDefault, .dismiss(_):
+            return offsetTypeOne(frame)
+        }
+    }
+    
+    private func offsetTypeOne(frame:CGRect) -> CGRect {
+        switch self {
+        case .toTop, .fromBottom:
+            return CGRectOffset(frame, 0, -UIScreen.mainScreen().bounds.size.height)
+        case .toRight, .fromLeft:
+            return CGRectOffset(frame, UIScreen.mainScreen().bounds.size.width, 0)
+        case .toBottom, .fromTop:
+            return CGRectOffset(frame, 0, UIScreen.mainScreen().bounds.size.height)
+        case .toLeft, .fromRight:
+            return CGRectOffset(frame, -UIScreen.mainScreen().bounds.size.width, 0)
+        }
+    }
+    
+    private func offsetTypeTwo(frame:CGRect) -> CGRect {
+        switch self {
+        case .toTop, .fromBottom:
+            return CGRectOffset(frame, 0, UIScreen.mainScreen().bounds.size.height)
+        case .toRight, .fromLeft:
+            return CGRectOffset(frame, -UIScreen.mainScreen().bounds.size.width, 0)
+        case .toBottom, .fromTop:
+            return CGRectOffset(frame, 0, -UIScreen.mainScreen().bounds.size.height)
+        case .toLeft, .fromRight:
+            return CGRectOffset(frame, UIScreen.mainScreen().bounds.size.width, 0)
+        }
+    }
+}
+
+class TranslateAnimator: BaseTransitionAnimator {
+    
+    private var direction = TranslateTransitionDirection.toRight
+    
+    func setOriginState(direction:TranslateTransitionDirection) {
         self.direction = direction
     }
     
@@ -30,16 +80,8 @@ class TranslateAnimator:BaseTransitionAnimator {
                 return
         }
         
-        var initialFrame = CGRectZero
         let finalFrame = transitionContext.finalFrameForViewController(toVC)
-        switch direction {
-        case Constants.TransitionDirection.LeftToRight:
-            initialFrame = CGRectOffset(finalFrame, -finalFrame.width, 0)
-        default:
-            ()
-        }
-        
-        NSLog("Info: initialFrame = \(initialFrame) and finalFrame = \(finalFrame)")
+        let initialFrame = direction.initialFrame(respectToFinalFrame: finalFrame, forTransitionType: transitionType)
         
         toVC.view.frame = initialFrame
         
@@ -65,15 +107,7 @@ class TranslateAnimator:BaseTransitionAnimator {
         }
         
         let initialFrame = transitionContext.initialFrameForViewController(fromVC)
-        var finalFrame = CGRectZero
-        switch direction {
-        case Constants.TransitionDirection.LeftToRight:
-            finalFrame = CGRectOffset(initialFrame, -initialFrame.width, 0)
-        default:
-            ()
-        }
-        
-        NSLog("Info: initialFrame = \(initialFrame) and finalFrame = \(finalFrame)")
+        let finalFrame = direction.finalFrame(respectToInitialFrame: initialFrame, forTransitionType: transitionType)
         
         toVC.view.frame = initialFrame
         fromVC.view.frame = initialFrame
@@ -84,6 +118,7 @@ class TranslateAnimator:BaseTransitionAnimator {
         let duration = transitionDuration(transitionContext)
         
         UIView.animateWithDuration(duration, animations: {
+            
             fromVC.view.frame = finalFrame
         }) { (animationComplete) in
             if animationComplete {
@@ -91,5 +126,4 @@ class TranslateAnimator:BaseTransitionAnimator {
             }
         }
     }
-    
 }

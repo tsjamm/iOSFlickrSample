@@ -9,22 +9,30 @@
 import Foundation
 import UIKit
 
-class BaseTransitionAnimator:NSObject, UIViewControllerAnimatedTransitioning {
+//MARK: TransitionType
+enum BaseTransitionType {
+    case presentDefault
+    case dismissDefault
+    case present(NSTimeInterval)
+    case dismiss(NSTimeInterval)
     
-    var duration:NSTimeInterval = 1
-    var doReverse:Bool = false
-    
-    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
-        return duration
-    }
-    
-    func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
-        if doReverse {
-            doBackwardTransition(transitionContext)
-        } else {
-            doForwardTransition(transitionContext)
+    func transitionDuration() -> NSTimeInterval {
+        switch self {
+        case let .present(duration):
+            return duration
+        case let .dismiss(duration):
+            return duration
+        case .presentDefault:
+            return 0.6
+        case .dismissDefault:
+            return 0.4
         }
     }
+}
+
+class BaseTransitionAnimator: NSObject {
+    
+    var transitionType = BaseTransitionType.presentDefault
     
     func doForwardTransition(transitionContext:UIViewControllerContextTransitioning) {
         return
@@ -32,5 +40,22 @@ class BaseTransitionAnimator:NSObject, UIViewControllerAnimatedTransitioning {
     
     func doBackwardTransition(transitionContext:UIViewControllerContextTransitioning) {
         return
+    }
+    
+    
+}
+
+extension BaseTransitionAnimator: UIViewControllerAnimatedTransitioning {
+    func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
+        switch transitionType {
+        case .present, .presentDefault:
+            doForwardTransition(transitionContext)
+        case .dismiss, .dismissDefault:
+            doBackwardTransition(transitionContext)
+        }
+    }
+    
+    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+        return transitionType.transitionDuration()
     }
 }

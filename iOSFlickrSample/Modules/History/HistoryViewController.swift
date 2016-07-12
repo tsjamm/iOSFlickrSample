@@ -10,7 +10,7 @@ import UIKit
 
 protocol HistoryViewControllerDelegate: class {
     func didTapOnHistoricalSearch(searchTerm: String)
-    func didTapOnClearHistory()
+    func searchHistoryCleared()
 }
 
 class HistoryViewController: BaseViewController {
@@ -27,7 +27,7 @@ class HistoryViewController: BaseViewController {
         super.awakeFromNib()
         
         let transitionAnimator = TranslateAnimator()
-        transitionAnimator.setOriginState(Constants.TransitionDirection.LeftToRight)
+        transitionAnimator.setOriginState(TranslateTransitionDirection.fromLeft)
         self.transitionAnimator = transitionAnimator
     }
     
@@ -39,7 +39,7 @@ class HistoryViewController: BaseViewController {
     @IBAction func onClearTap(sender: AnyObject) {
         HistoryManager.clearAllSearchesFromDB()
         self.historyView.dataSource = HistoryViewModel(historyList: HistoryManager.getUpdatedHistoryList())
-        delegate?.didTapOnClearHistory()
+        delegate?.searchHistoryCleared()
     }
     
     @IBAction func onEditTap(sender: AnyObject) {
@@ -47,12 +47,6 @@ class HistoryViewController: BaseViewController {
             self.historyView.tableView.setEditing(false, animated: true)
         } else {
             self.historyView.tableView.setEditing(true, animated: true)
-        }
-    }
-    
-    override func performSegueWithIdentifier(identifier: String, sender: AnyObject?) {
-        if identifier == Constants.SegueId.GalleryToHistory.rawValue {
-            NSLog("HistoryView:: segue with id=\(identifier) being called...")
         }
     }
 }
@@ -69,6 +63,9 @@ extension HistoryViewController: HistoryViewDelegate {
     func commitEditingStyleAtIndexPath(tableView: UITableView, editingStyle: UITableViewCellEditingStyle, indexPath: NSIndexPath) {
         if editingStyle == UITableViewCellEditingStyle.Delete {
             HistoryManager.deleteSearch(indexPath)
+            if HistoryManager.getHistoryCount() == 0 {
+                delegate?.searchHistoryCleared()
+            }
             self.historyView.dataSource = HistoryViewModel(historyList: HistoryManager.getUpdatedHistoryList())
         }
     }

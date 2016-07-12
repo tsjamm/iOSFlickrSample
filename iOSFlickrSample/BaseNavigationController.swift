@@ -35,13 +35,13 @@ class BaseNavigationController: UINavigationController, UINavigationControllerDe
         
         switch operation {
         case UINavigationControllerOperation.Push:
-            if let animator = toVC.transitionAnimator {
-                animator.doReverse = false
+            if let baseVC = toVC as? BaseViewController, let animator = baseVC.transitionAnimator  {
+                animator.transitionType = BaseTransitionType.presentDefault
                 return animator
             }
         case UINavigationControllerOperation.Pop:
-            if let animator = fromVC.transitionAnimator {
-                animator.doReverse = true
+            if let baseVC = fromVC as? BaseViewController, let animator = baseVC.transitionAnimator  {
+                animator.transitionType = BaseTransitionType.dismissDefault
                 return animator
             }
         default:

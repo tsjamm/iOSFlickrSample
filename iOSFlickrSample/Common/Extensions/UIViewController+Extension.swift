@@ -11,12 +11,12 @@ import UIKit
 var TransitionAnimatorAssociatedObjectHandle: UInt8 = 0
 
 extension UIViewController {
-    var transitionAnimator:BaseTransitionAnimator? {
-        get {
-            return objc_getAssociatedObject(self, &TransitionAnimatorAssociatedObjectHandle) as? BaseTransitionAnimator
-        }
-        set {
-            objc_setAssociatedObject(self, &TransitionAnimatorAssociatedObjectHandle, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-        }
-    }
+//    var transitionAnimator:UIViewControllerAnimatedTransitioning? {
+//        get {
+//            return objc_getAssociatedObject(self, &TransitionAnimatorAssociatedObjectHandle) as? UIViewControllerAnimatedTransitioning
+//        }
+//        set {
+//            objc_setAssociatedObject(self, &TransitionAnimatorAssociatedObjectHandle, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+//        }
+//    }
 }

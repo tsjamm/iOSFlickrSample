@@ -15,6 +15,7 @@
 		88309B871D3270F000ADF593 /* PhotoDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88309B861D3270F000ADF593 /* PhotoDetailViewModel.swift */; };
 		88309B8B1D32714000ADF593 /* PhotoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88309B8A1D32714000ADF593 /* PhotoDetailView.swift */; };
 		88309B8D1D33A4DD00ADF593 /* FlickrRealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88309B8C1D33A4DD00ADF593 /* FlickrRealmManager.swift */; };
+		88309B911D33F6AC00ADF593 /* BaseTransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88309B901D33F6AC00ADF593 /* BaseTransitionAnimator.swift */; };
 		884C40EE1D2E3AEE008E623A /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884C40ED1D2E3AEE008E623A /* BaseNavigationController.swift */; };
 		884C40F01D2E3C8B008E623A /* UICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884C40EF1D2E3C8B008E623A /* UICollectionView+Extension.swift */; };
 		884C40F41D2E3C9E008E623A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884C40F11D2E3C9E008E623A /* Constants.swift */; };
@@ -25,10 +26,9 @@
 		884C40FF1D2E3CB9008E623A /* GalleryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884C40FA1D2E3CB9008E623A /* GalleryManager.swift */; };
 		884C41051D2E3CF1008E623A /* PhotoDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 884C41011D2E3CF1008E623A /* PhotoDetail.storyboard */; };
 		884C41061D2E3CF1008E623A /* PhotoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884C41021D2E3CF1008E623A /* PhotoManager.swift */; };
-		884C41071D2E3CF1008E623A /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884C41031D2E3CF1008E623A /* PhotoViewController.swift */; };
+		884C41071D2E3CF1008E623A /* PhotoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884C41031D2E3CF1008E623A /* PhotoDetailViewController.swift */; };
 		884C41161D2E5538008E623A /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884C41151D2E5538008E623A /* UIView+Extension.swift */; };
 		884C41181D2E557D008E623A /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884C41171D2E557D008E623A /* UIViewController+Extension.swift */; };
-		884C411C1D2E6DDA008E623A /* BaseTransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884C411A1D2E6DDA008E623A /* BaseTransitionAnimator.swift */; };
 		884C411D1D2E6DDA008E623A /* ZoomAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884C411B1D2E6DDA008E623A /* ZoomAnimator.swift */; };
 		884C411F1D2E79F9008E623A /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884C411E1D2E79F9008E623A /* BaseViewController.swift */; };
 		884C41211D2E7D6E008E623A /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884C41201D2E7D6E008E623A /* GalleryViewController.swift */; };
@@ -79,6 +79,7 @@
 		88309B861D3270F000ADF593 /* PhotoDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotoDetailViewModel.swift; path = Modules/Photo/PhotoDetailViewModel.swift; sourceTree = "<group>"; };
 		88309B8A1D32714000ADF593 /* PhotoDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotoDetailView.swift; path = Modules/Photo/PhotoDetailView.swift; sourceTree = "<group>"; };
 		88309B8C1D33A4DD00ADF593 /* FlickrRealmManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FlickrRealmManager.swift; path = Common/FlickrRealmManager.swift; sourceTree = "<group>"; };
+		88309B901D33F6AC00ADF593 /* BaseTransitionAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseTransitionAnimator.swift; path = Common/Transitions/BaseTransitionAnimator.swift; sourceTree = "<group>"; };
 		884C40ED1D2E3AEE008E623A /* BaseNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseNavigationController.swift; sourceTree = "<group>"; };
 		884C40EF1D2E3C8B008E623A /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UICollectionView+Extension.swift"; path = "Common/Extensions/UICollectionView+Extension.swift"; sourceTree = "<group>"; };
 		884C40F11D2E3C9E008E623A /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = Common/Constants.swift; sourceTree = "<group>"; };
@@ -89,10 +90,9 @@
 		884C40FA1D2E3CB9008E623A /* GalleryManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GalleryManager.swift; path = Modules/Gallery/GalleryManager.swift; sourceTree = "<group>"; };
 		884C41011D2E3CF1008E623A /* PhotoDetail.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = PhotoDetail.storyboard; path = Modules/Photo/PhotoDetail.storyboard; sourceTree = "<group>"; };
 		884C41021D2E3CF1008E623A /* PhotoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotoManager.swift; path = Modules/Photo/PhotoManager.swift; sourceTree = "<group>"; };
-		884C41031D2E3CF1008E623A /* PhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotoViewController.swift; path = Modules/Photo/PhotoViewController.swift; sourceTree = "<group>"; };
+		884C41031D2E3CF1008E623A /* PhotoDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotoDetailViewController.swift; path = Modules/Photo/PhotoDetailViewController.swift; sourceTree = "<group>"; };
 		884C41151D2E5538008E623A /* UIView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIView+Extension.swift"; path = "Common/Extensions/UIView+Extension.swift"; sourceTree = "<group>"; };
 		884C41171D2E557D008E623A /* UIViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIViewController+Extension.swift"; path = "Common/Extensions/UIViewController+Extension.swift"; sourceTree = "<group>"; };
-		884C411A1D2E6DDA008E623A /* BaseTransitionAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseTransitionAnimator.swift; path = Common/Transitions/BaseTransitionAnimator.swift; sourceTree = "<group>"; };
 		884C411B1D2E6DDA008E623A /* ZoomAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ZoomAnimator.swift; path = Common/Transitions/ZoomAnimator.swift; sourceTree = "<group>"; };
 		884C411E1D2E79F9008E623A /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		884C41201D2E7D6E008E623A /* GalleryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GalleryViewController.swift; path = Modules/Gallery/GalleryViewController.swift; sourceTree = "<group>"; };
@@ -189,7 +189,7 @@
 		884C41191D2E6D9E008E623A /* Transitions */ = {
 			isa = PBXGroup;
 			children = (
-				884C411A1D2E6DDA008E623A /* BaseTransitionAnimator.swift */,
+				88309B901D33F6AC00ADF593 /* BaseTransitionAnimator.swift */,
 				884C411B1D2E6DDA008E623A /* ZoomAnimator.swift */,
 				8850BEEC1D2FB06A00465536 /* TranslateAnimator.swift */,
 			);
@@ -291,7 +291,7 @@
 			isa = PBXGroup;
 			children = (
 				884C41011D2E3CF1008E623A /* PhotoDetail.storyboard */,
-				884C41031D2E3CF1008E623A /* PhotoViewController.swift */,
+				884C41031D2E3CF1008E623A /* PhotoDetailViewController.swift */,
 				88309B861D3270F000ADF593 /* PhotoDetailViewModel.swift */,
 				88309B8A1D32714000ADF593 /* PhotoDetailView.swift */,
 				884C41021D2E3CF1008E623A /* PhotoManager.swift */,
@@ -530,17 +530,17 @@
 				884C41231D2E8636008E623A /* UIImageView+Extension.swift in Sources */,
 				8850BEEF1D2FD19700465536 /* FlickrNetworkManager.swift in Sources */,
 				88309B8B1D32714000ADF593 /* PhotoDetailView.swift in Sources */,
-				884C411C1D2E6DDA008E623A /* BaseTransitionAnimator.swift in Sources */,
 				884C411D1D2E6DDA008E623A /* ZoomAnimator.swift in Sources */,
 				88309B871D3270F000ADF593 /* PhotoDetailViewModel.swift in Sources */,
 				88309B7B1D2FFD2F00ADF593 /* GalleryView.swift in Sources */,
 				8850BEE11D2F860F00465536 /* FlickrPhoto.swift in Sources */,
 				884C40FD1D2E3CB9008E623A /* GallerySectionHeaderView.swift in Sources */,
 				88309B831D3264B700ADF593 /* HistoryView.swift in Sources */,
+				88309B911D33F6AC00ADF593 /* BaseTransitionAnimator.swift in Sources */,
 				884C41211D2E7D6E008E623A /* GalleryViewController.swift in Sources */,
 				88309B8D1D33A4DD00ADF593 /* FlickrRealmManager.swift in Sources */,
 				884C40F61D2E3C9E008E623A /* FlickrDataManager.swift in Sources */,
-				884C41071D2E3CF1008E623A /* PhotoViewController.swift in Sources */,
+				884C41071D2E3CF1008E623A /* PhotoDetailViewController.swift in Sources */,
 				884C40FF1D2E3CB9008E623A /* GalleryManager.swift in Sources */,
 				884C40EE1D2E3AEE008E623A /* BaseNavigationController.swift in Sources */,
 				8850BEE21D2F860F00465536 /* FlickrResponse.swift in Sources */,

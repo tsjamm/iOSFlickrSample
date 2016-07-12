@@ -28,6 +28,10 @@ class HistoryManager {
         
     }
     
+    static func getHistoryCount() -> Int {
+        return historyList.count
+    }
+    
     static func getUpdatedHistoryList() -> [String] {
         updateHistoryList()
         return self.historyList

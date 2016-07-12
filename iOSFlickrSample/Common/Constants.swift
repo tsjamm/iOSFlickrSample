@@ -13,27 +13,15 @@ struct Constants {
     
     static let flickrAPIKey = "eb69f553cdd8643c5a136e712742757e"
     
-    enum FlickrPhotoSize:String {
-        case Small = "s"
-        case Medium = "m"
-        case Big = "b"
+    struct StoryBoardVCID {
+        static let PhotoDetailViewController = "PhotoDetailViewController"
+        static let GalleryViewController = "GalleryViewController"
+        static let HistoryViewController = "HistoryViewController"
     }
     
-    enum StoryBoardVCID:String {
-        case PhotoDetailViewController
-        case GalleryViewController
-        case HistoryViewController
+    struct StoryBoardSegueID {
+        static let GalleryToPhoto = "GalleryToPhoto"
+        static let GalleryToHistory = "GalleryToHistory"
     }
     
-    enum TransitionDirection:Int {
-        case LeftToRight
-        case RightToLeft
-        case TopToBottom
-        case BottomToTop
-    }
-    
-    enum SegueId:String {
-        case GalleryToPhoto
-        case GalleryToHistory
-    }
 }

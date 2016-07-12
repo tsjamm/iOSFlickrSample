@@ -50,21 +50,21 @@ class FlickrPhoto {
     /// MARK:- Image URL getters
     
     func getThumbnailURL() -> NSURL? {
-        if let toReturn = getImageURL(Constants.FlickrPhotoSize.Small.rawValue) {
+        if let toReturn = getImageURL(FlickrPhotoSize.Small.rawValue) {
             return toReturn
         }
         return nil
     }
     
     func getMediumURL() -> NSURL? {
-        if let toReturn = getImageURL(Constants.FlickrPhotoSize.Medium.rawValue) {
+        if let toReturn = getImageURL(FlickrPhotoSize.Medium.rawValue) {
             return toReturn
         }
         return nil
     }
     
     func getLargeURL() -> NSURL? {
-        if let toReturn = getImageURL(Constants.FlickrPhotoSize.Big.rawValue) {
+        if let toReturn = getImageURL(FlickrPhotoSize.Big.rawValue) {
             return toReturn
         }
         return nil
@@ -80,4 +80,9 @@ class FlickrPhoto {
         return NSURL(string: urlString)
     }
     
+    enum FlickrPhotoSize:String {
+        case Small = "s"
+        case Medium = "m"
+        case Big = "b"
+    }
 }
