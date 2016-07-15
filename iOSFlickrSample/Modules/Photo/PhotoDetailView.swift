@@ -9,8 +9,8 @@
 import UIKit
 
 protocol PhotoDetailViewDelegate: class {
-    func onDoubleTap()
-    func onPan()
+    func onTap(sender:UITapGestureRecognizer)
+    func onPan(sender:UIPanGestureRecognizer)
 }
 
 protocol PhotoDetailViewDataSource: class {
@@ -34,13 +34,10 @@ class PhotoDetailView: UIView {
     @IBOutlet weak var imageView: UIImageView!
     
     @IBAction func onTap(sender:UITapGestureRecognizer) {
-        //
-        NSLog("Double Tapped on PhotoDetailView")
-        delegate?.onDoubleTap()
+        delegate?.onTap(sender)
     }
     
     @IBAction func onPan(sender:UIPanGestureRecognizer) {
-        NSLog("Pan Gesture on PhotoDetailView \(sender.translationInView(self))")
-        delegate?.onPan()
+        delegate?.onPan(sender)
     }
 }

@@ -15,6 +15,7 @@ class GalleryPhotoCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        imageView.image = nil
         imageView.af_cancelImageRequest()
     }
 }

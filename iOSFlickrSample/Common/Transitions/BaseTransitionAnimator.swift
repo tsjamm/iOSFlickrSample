@@ -11,28 +11,36 @@ import UIKit
 
 //MARK: TransitionType
 enum BaseTransitionType {
-    case presentDefault
-    case dismissDefault
-    case present(NSTimeInterval)
-    case dismiss(NSTimeInterval)
+    case present(Duration)
+    case dismiss(Duration)
     
     func transitionDuration() -> NSTimeInterval {
         switch self {
         case let .present(duration):
-            return duration
+            return duration.value()
         case let .dismiss(duration):
-            return duration
-        case .presentDefault:
-            return 0.6
-        case .dismissDefault:
-            return 0.4
+            return duration.value()
+        }
+    }
+    
+    enum Duration {
+        case custom(NSTimeInterval)
+        case regular
+        
+        func value() -> NSTimeInterval {
+            switch self {
+            case let .custom(duration):
+                return duration
+            case regular:
+                return 0.5
+            }
         }
     }
 }
 
 class BaseTransitionAnimator: NSObject {
     
-    var transitionType = BaseTransitionType.presentDefault
+    var transitionType = BaseTransitionType.present(.regular)
     
     func doForwardTransition(transitionContext:UIViewControllerContextTransitioning) {
         return
@@ -42,15 +50,14 @@ class BaseTransitionAnimator: NSObject {
         return
     }
     
-    
 }
 
 extension BaseTransitionAnimator: UIViewControllerAnimatedTransitioning {
     func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
         switch transitionType {
-        case .present, .presentDefault:
+        case .present:
             doForwardTransition(transitionContext)
-        case .dismiss, .dismissDefault:
+        case .dismiss:
             doBackwardTransition(transitionContext)
         }
     }

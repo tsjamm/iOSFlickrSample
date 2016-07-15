@@ -43,6 +43,7 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="d0T-IN-x1T" secondAttribute="trailing" id="OGd-1O-TgC"/>
                             <constraint firstItem="d0T-IN-x1T" firstAttribute="top" secondItem="d5q-EU-jcq" secondAttribute="top" id="Zru-g5-k64"/>
@@ -51,6 +52,7 @@
                         </constraints>
                         <connections>
                             <outlet property="tableView" destination="d0T-IN-x1T" id="taY-gb-dhC"/>
+                            <outletCollection property="gestureRecognizers" destination="cV9-yM-0lJ" appends="YES" id="7El-SV-mjV"/>
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" title="Your History" id="thY-sb-B4w">
@@ -73,6 +75,12 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TNa-2D-OhV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <screenEdgePanGestureRecognizer minimumNumberOfTouches="1" id="cV9-yM-0lJ">
+                    <rectEdge key="edges" right="YES"/>
+                    <connections>
+                        <action selector="onEdgePan:" destination="d5q-EU-jcq" id="Pqx-VX-plw"/>
+                    </connections>
+                </screenEdgePanGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="338" y="474"/>
         </scene>

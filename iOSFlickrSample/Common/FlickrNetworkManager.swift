@@ -40,7 +40,7 @@ class FlickrNetworkManager {
             return nil
         }
         let URLString = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=\(Constants.flickrAPIKey)&text=\(escapedTerm)&per_page=\(perPage)&format=json&nojsoncallback=1&page=\(page)"
-        NSLog("URLString = \(URLString)")
+        //NSLog("URLString = \(URLString)")
         return NSURL(string: URLString)
     }
     

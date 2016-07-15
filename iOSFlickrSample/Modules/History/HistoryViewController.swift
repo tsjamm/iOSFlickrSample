@@ -69,4 +69,8 @@ extension HistoryViewController: HistoryViewDelegate {
             self.historyView.dataSource = HistoryViewModel(historyList: HistoryManager.getUpdatedHistoryList())
         }
     }
+    
+    func onEdgePan(sender: UIScreenEdgePanGestureRecognizer) {
+        interactivePopForGestureRecognizer(sender)
+    }
 }

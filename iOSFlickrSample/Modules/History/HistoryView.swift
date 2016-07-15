@@ -11,6 +11,7 @@ import UIKit
 protocol HistoryViewDelegate: class {
     func didTapOnCellAtIndexPath(tableView:UITableView, indexPath:NSIndexPath)
     func commitEditingStyleAtIndexPath(tableView: UITableView, editingStyle: UITableViewCellEditingStyle, indexPath: NSIndexPath)
+    func onEdgePan(sender:UIScreenEdgePanGestureRecognizer)
 }
 
 protocol HistoryViewDataSource: class {
@@ -43,6 +44,10 @@ class HistoryView: UIView {
     
     func reloadTableView() {
         self.tableView.reloadData()
+    }
+    
+    @IBAction func onEdgePan(sender:UIScreenEdgePanGestureRecognizer) {
+        delegate?.onEdgePan(sender)
     }
 }
 

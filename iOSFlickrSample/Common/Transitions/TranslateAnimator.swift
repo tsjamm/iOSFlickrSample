@@ -22,18 +22,18 @@ enum TranslateTransitionDirection {
     
     func finalFrame(respectToInitialFrame frame: CGRect, forTransitionType type:BaseTransitionType) -> CGRect {
         switch type {
-        case .presentDefault, .present(_):
+        case .present(_):
             return offsetTypeOne(frame)
-        case .dismissDefault, .dismiss(_):
+        case .dismiss(_):
             return offsetTypeTwo(frame)
         }
     }
     
     func initialFrame(respectToFinalFrame frame: CGRect, forTransitionType type:BaseTransitionType) -> CGRect {
         switch type {
-        case .presentDefault, .present(_):
+        case .present(_):
             return offsetTypeTwo(frame)
-        case .dismissDefault, .dismiss(_):
+        case .dismiss(_):
             return offsetTypeOne(frame)
         }
     }
@@ -93,9 +93,13 @@ class TranslateAnimator: BaseTransitionAnimator {
         UIView.animateWithDuration(duration, animations: {
             toVC.view.frame = finalFrame
         }) { (animationComplete) in
-            if animationComplete {
-                transitionContext.completeTransition(true)
-            }
+            //if animationComplete {
+                if transitionContext.transitionWasCancelled() {
+                    transitionContext.completeTransition(false)
+                } else {
+                    transitionContext.completeTransition(true)
+                }
+            //}
         }
     }
     
@@ -121,7 +125,12 @@ class TranslateAnimator: BaseTransitionAnimator {
             
             fromVC.view.frame = finalFrame
         }) { (animationComplete) in
-            if animationComplete {
+//            if animationComplete {
+//                
+//            }
+            if transitionContext.transitionWasCancelled() {
+                transitionContext.completeTransition(false)
+            } else {
                 transitionContext.completeTransition(true)
             }
         }

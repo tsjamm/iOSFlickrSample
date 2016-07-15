@@ -28,30 +28,39 @@ class PhotoDetailViewController:BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         
         self.navigationController?.hidesBarsOnTap = true
         self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     override func viewWillDisappear(animated: Bool) {
-        super.viewDidDisappear(animated)
-        
+        super.viewWillDisappear(animated)
         self.navigationController?.hidesBarsOnTap = false
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
+//        if let tA = self.transitionAnimator where tA.isInteractive {
+//            self.navigationController?.setNavigationBarHidden(false, animated: false)
+//        } else {
+            self.navigationController?.setNavigationBarHidden(false, animated: true)
+//        }
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
     }
 
 }
 
 extension PhotoDetailViewController: PhotoDetailViewDelegate {
-    func onDoubleTap() {
-        if let nVC = self.navigationController {
-            nVC.popViewControllerAnimated(true)
-        } else {
-            self.dismissViewControllerAnimated(true, completion: nil)
+    func onTap(sender:UITapGestureRecognizer) {
+        if sender.numberOfTapsRequired == 2 {
+            popCurrentVC(false)
         }
     }
     
-    func onPan() {
-        //TODO:-
+    func onPan(sender:UIPanGestureRecognizer) {
+        interactivePopForGestureRecognizer(sender)
     }
 }

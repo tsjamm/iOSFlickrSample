@@ -51,12 +51,17 @@ class ZoomAnimator: BaseTransitionAnimator {
             backgroundView.alpha = 1.0
             
         }) { (animationComplete) in
-            if animationComplete {
-                toVC.view.hidden = false
-                animationView.removeFromSuperview()
-                backgroundView.removeFromSuperview()
+            
+            toVC.view.hidden = false
+            animationView.removeFromSuperview()
+            backgroundView.removeFromSuperview()
+            
+            if transitionContext.transitionWasCancelled() {
+                transitionContext.completeTransition(false)
+            } else {
                 transitionContext.completeTransition(true)
             }
+            
         }
     }
     
@@ -75,8 +80,7 @@ class ZoomAnimator: BaseTransitionAnimator {
         
         let backgroundView = UIView()
         backgroundView.frame = initialFrame
-        backgroundView.backgroundColor = UIColor.whiteColor()
-        
+        backgroundView.backgroundColor = UIColor.blackColor()
         
         containerView.addSubview(toVC.view)
         containerView.addSubview(backgroundView)
@@ -94,10 +98,12 @@ class ZoomAnimator: BaseTransitionAnimator {
             backgroundView.alpha = 0.0
             
         }) { (animationComplete) in
-            if animationComplete {
-                fromVC.view.hidden = true
-                animationView.removeFromSuperview()
-                backgroundView.removeFromSuperview()
+            
+            animationView.removeFromSuperview()
+            backgroundView.removeFromSuperview()
+            if transitionContext.transitionWasCancelled() {
+                transitionContext.completeTransition(false)
+            } else {
                 transitionContext.completeTransition(true)
             }
         }

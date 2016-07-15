@@ -8,9 +8,10 @@
 
 import UIKit
 
-class BaseNavigationController: UINavigationController, UINavigationControllerDelegate {
+class BaseNavigationController: UINavigationController {
     
     static var instance:BaseNavigationController? = nil
+    var percentDriven: UIPercentDrivenInteractiveTransition?
     
     static func getInstance() -> BaseNavigationController {
         if let toReturn = instance {
@@ -27,28 +28,47 @@ class BaseNavigationController: UINavigationController, UINavigationControllerDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.delegate = self
+        delegate = self
     }
     
-    func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        
+}
+
+extension BaseNavigationController: UINavigationControllerDelegate {
+    
+    func navigationController(navigationController: UINavigationController, animationControllerForOperation
+        operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController
+        toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         switch operation {
-        case UINavigationControllerOperation.Push:
+        case .Push:
             if let baseVC = toVC as? BaseViewController, let animator = baseVC.transitionAnimator  {
-                animator.transitionType = BaseTransitionType.presentDefault
+                animator.transitionType = BaseTransitionType.present(.regular)
+                percentDriven = baseVC.percentDriven
                 return animator
+            } else {
+                percentDriven = nil
             }
-        case UINavigationControllerOperation.Pop:
+        case .Pop:
             if let baseVC = fromVC as? BaseViewController, let animator = baseVC.transitionAnimator  {
-                animator.transitionType = BaseTransitionType.dismissDefault
+                animator.transitionType = BaseTransitionType.dismiss(.regular)
+                percentDriven = baseVC.percentDriven
                 return animator
+            } else {
+                percentDriven = nil
             }
         default:
-            ()
+            percentDriven = nil
         }
         
         return nil
+    }
+    
+    func navigationController(navigationController: UINavigationController, interactionControllerForAnimationController
+        animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        return percentDriven
+    }
+    
+    func navigationController(navigationController: UINavigationController, didShowViewController viewController: UIViewController, animated: Bool) {
+        percentDriven = nil
     }
     
 }

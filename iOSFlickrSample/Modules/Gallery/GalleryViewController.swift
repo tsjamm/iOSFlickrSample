@@ -52,6 +52,7 @@ class GalleryViewController: BaseViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        super.prepareForSegue(segue, sender: sender)
         if segue.identifier == Constants.StoryBoardSegueID.GalleryToPhoto {
             if let cell = sender as? GalleryPhotoCell {
                 if let indexPath = self.galleryView.collectionView.indexPathForCell(cell) {
@@ -70,7 +71,12 @@ class GalleryViewController: BaseViewController {
                 historyVC.delegate = self
             }
         }
+        
+        let l: [String] =  ["a"].map() {
+            return $0.lowercaseString
+        }
     }
+    
 }
 
 /// This is for when the searchbar is handled (It is present in Navigation Item, hence not in Gallery View)
@@ -89,6 +95,7 @@ extension GalleryViewController: GalleryViewDelegate {
     
     func didTapOnCellAtIndexPath(collectionView: UICollectionView, indexPath: NSIndexPath) {
         // the storyboard segue is currently showing the photo view controller.
+        self.searchField.resignFirstResponder()
     }
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
