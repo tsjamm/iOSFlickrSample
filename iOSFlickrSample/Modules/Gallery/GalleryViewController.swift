@@ -8,129 +8,110 @@
 
 import UIKit
 
+/// The Gallery View Controller presents a collection view of the images searched for by the search field.
 class GalleryViewController: BaseViewController {
-    
-    private let reuseIdentifier = "PicCell"
-    private let sectionIdentifier = "SecHeader"
-    
-    private let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
-    
-    @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var searchField: UITextField!
-    
+
+    @IBOutlet var galleryView: GalleryView! {
+        didSet {
+            self.galleryView.delegate = self
+        }
+    }
+    @IBOutlet weak var searchField: UITextField! {
+        didSet {
+            searchField.delegate = self
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.collectionView.delegate = self
-        self.collectionView.dataSource = self
-        self.searchField.delegate = self
+        
     }
     
-    
-    @IBAction func onHistoryTap(sender: AnyObject) {
-        HistoryManager.showHistoryView()
-    }
-    
-//    @IBAction func onClearTap(sender: AnyObject) {
-//        GalleryManager.clearFlickrData {
-//            if let cView = self.collectionView {
-//                cView.reloadData()
-//            }
-//            self.searchField.text = ""
-//        }
-//    }
-    
-    @IBAction func onSearchTap(sender: AnyObject) {
-        doSearch()
-    }
-    
-    func doSearch() {
-        guard let searchTerm = self.searchField.text where searchTerm != ""  else {
+    func doSearchFor(text: String) {
+        guard text != "" else {
             return
         }
-        self.searchField.resignFirstResponder()
-        self.view.showLoadingView()
-        GalleryManager.fetchFlickrData(searchTerm) {
-            dispatch_async(dispatch_get_main_queue(), {
-                if let cView = self.collectionView {
-                    cView.reloadData()
-                    var offsetY:CGFloat = 0
-                    if let _ = self.navigationController {
-                        offsetY += 64
+        searchField.resignFirstResponder()
+        searchField.text = ""
+        galleryView.showLoadingView()
+        GalleryManager.fetchFlickrData(text) { (fResponse) in
+            self.galleryView.dataSource = GalleryViewModel(flickrResponse: fResponse)
+        }
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        galleryView.invalidateLayout()
+        //NSLog("GalleryVC: view will layout subviews")
+    }
+    
+    @IBAction func onSearchTap(sender: AnyObject) {
+        if let _searchedText = searchField.text {
+            doSearchFor(_searchedText)
+        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        super.prepareForSegue(segue, sender: sender)
+        if segue.identifier == Constants.StoryBoardSegueID.GalleryToPhoto {
+            if let cell = sender as? GalleryPhotoCell {
+                if let indexPath = self.galleryView.collectionView.indexPathForCell(cell) {
+                    if let flickrPhoto = GalleryManager.getFlickrPhotoForIndexPath(indexPath) {
+                        if let photoVC = segue.destinationViewController as? PhotoDetailViewController {
+                            let zoomOriginFrame = self.galleryView.collectionView.getRelativeCellFrameInSuperView(indexPath)
+                            
+                            PhotoManager.setInitialPhotoVCInfo(photoVC, flickrPhoto: flickrPhoto)
+                            PhotoManager.setPhotoVCAnimatorInfo(flickrPhoto, photoVC: photoVC, zoomOriginFrame: zoomOriginFrame)
+                        }
                     }
-                    cView.setContentOffset(CGPointMake(0, 0-offsetY), animated: true)
                 }
-                self.view.removeLoadingView()
-            })
-        }
-    }
-}
-
-extension GalleryViewController:UICollectionViewDataSource {
-    /// DataSource methods, the protocol does not need to be explicitly added.
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return GalleryManager.getNumberOfSearches()
-    }
-    
-    /// DataSource methods, the protocol does not need to be explicitly added.
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return GalleryManager.getNumberOfPhotos(section)
-    }
-    
-    /// DataSource methods, the protocol does not need to be explicitly added.
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! FlickrPhotoCell
-        GalleryManager.setCellInfo(cell, indexPath: indexPath)
-        return cell
-    }
-    
-    func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
-        switch kind {
-        case UICollectionElementKindSectionHeader:
-            let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: self.sectionIdentifier, forIndexPath: indexPath) as! FlickrSectionHeaderView
-            GalleryManager.setSectionHeaderInfo(headerView, indexPath: indexPath)
-            if headerView.isLoading {
-                headerView.activityIndicator.startAnimating()
-            } else {
-                headerView.activityIndicator.stopAnimating()
             }
-            return headerView
-        default: NSLog("Error: Other Supplementary View (not header, so not expected)")
+        } else if segue.identifier == Constants.StoryBoardSegueID.GalleryToHistory {
+            if let historyVC = segue.destinationViewController as? HistoryViewController {
+                historyVC.delegate = self
+            }
         }
-        return UICollectionReusableView()
-    }
-}
-
-extension GalleryViewController:UICollectionViewDelegate {
-    
-    func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
         
-        return GalleryManager.shouldSelectItemAtIndexPath(collectionView, indexPath: indexPath)
-        
-    }
-}
-
-extension GalleryViewController:UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return GalleryManager.sizeForItemAtIndexPath(collectionView, indexPath: indexPath)
-    }
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        return self.sectionInsets
+        let l: [String] =  ["a"].map() {
+            return $0.lowercaseString
+        }
     }
     
 }
 
-extension GalleryViewController:UITextFieldDelegate {
+/// This is for when the searchbar is handled (It is present in Navigation Item, hence not in Gallery View)
+extension GalleryViewController: UITextFieldDelegate {
+    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        doSearch()
+        if let _searchedText = textField.text {
+            doSearchFor(_searchedText)
+        }
         return true
     }
 }
 
-extension GalleryViewController:UIScrollViewDelegate {
+/// This is for when the user does something in the GalleryView
+extension GalleryViewController: GalleryViewDelegate {
+    
+    func didTapOnCellAtIndexPath(collectionView: UICollectionView, indexPath: NSIndexPath) {
+        // the storyboard segue is currently showing the photo view controller.
+        self.searchField.resignFirstResponder()
+    }
+    
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         self.searchField.resignFirstResponder()
+    }
+}
+
+/// This is for when user does something in the History View Controller
+extension GalleryViewController: HistoryViewControllerDelegate {
+    func searchHistoryCleared() {
+        self.galleryView.dataSource = nil
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    func didTapOnHistoricalSearch(searchTerm: String) {
+        doSearchFor(searchTerm)
+        self.navigationController?.popViewControllerAnimated(true)
     }
 }

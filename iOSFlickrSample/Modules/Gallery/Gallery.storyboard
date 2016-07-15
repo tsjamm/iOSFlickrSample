@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="3x9-V5-DEy">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -14,7 +14,7 @@
                         <viewControllerLayoutGuide type="top" id="dqI-yt-OMK"/>
                         <viewControllerLayoutGuide type="bottom" id="Tvu-Ka-kyV"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="DCt-Bg-A8V">
+                    <view key="view" contentMode="scaleToFill" id="DCt-Bg-A8V" customClass="GalleryView" customModule="iOSFlickrSample" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -28,14 +28,14 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PicCell" id="Fuf-l7-ygd" customClass="FlickrPhotoCell" customModule="iOSFlickrSample" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="100" height="100"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PicCell" id="Fuf-l7-ygd" customClass="GalleryPhotoCell" customModule="iOSFlickrSample" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="114" width="100" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="RQN-iQ-GB0">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="RQN-iQ-GB0">
                                                     <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                                 </imageView>
                                             </subviews>
@@ -49,11 +49,12 @@
                                         </constraints>
                                         <connections>
                                             <outlet property="imageView" destination="RQN-iQ-GB0" id="DjN-Rv-BoF"/>
+                                            <segue destination="d2s-Zp-lTB" kind="show" identifier="GalleryToPhoto" id="Nnh-ii-Kb1"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
-                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SecHeader" id="y3y-SI-b9i" customClass="FlickrSectionHeaderView" customModule="iOSFlickrSample" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SecHeader" id="y3y-SI-b9i" customClass="GallerySectionHeaderView" customModule="iOSFlickrSample" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="64" width="320" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sYG-aT-RNI">
@@ -74,7 +75,7 @@
                                         <constraint firstItem="sYG-aT-RNI" firstAttribute="centerX" secondItem="y3y-SI-b9i" secondAttribute="centerX" id="uT8-0B-UYn"/>
                                     </constraints>
                                     <connections>
-                                        <outlet property="activityIndicator" destination="Em4-6k-miO" id="6R3-Zl-aDb"/>
+                                        <outlet property="activityIndicator" destination="Em4-6k-miO" id="nAo-Wx-B3c"/>
                                         <outlet property="headerLabel" destination="sYG-aT-RNI" id="GaO-5r-psn"/>
                                     </connections>
                                 </collectionReusableView>
@@ -87,35 +88,58 @@
                             <constraint firstAttribute="trailing" secondItem="EYP-QD-aaz" secondAttribute="trailing" id="bnA-g9-2x3"/>
                             <constraint firstItem="Tvu-Ka-kyV" firstAttribute="top" secondItem="EYP-QD-aaz" secondAttribute="bottom" id="d8u-r4-qtV"/>
                         </constraints>
+                        <connections>
+                            <outlet property="collectionView" destination="EYP-QD-aaz" id="NSQ-8L-Yr5"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="OaV-P0-BL4">
                         <nil key="title"/>
                         <barButtonItem key="leftBarButtonItem" title="History" id="Vg7-ER-CZe">
                             <connections>
-                                <action selector="onHistoryTap:" destination="3x9-V5-DEy" id="CTc-pL-Lo8"/>
+                                <segue destination="sp6-5b-kgg" kind="show" identifier="GalleryToHistory" id="VUh-JJ-dVv"/>
                             </connections>
                         </barButtonItem>
-                        <textField key="titleView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search Flickr" textAlignment="natural" minimumFontSize="17" id="E9s-qC-0d4">
-                            <rect key="frame" x="96" y="7" width="128" height="30"/>
+                        <textField key="titleView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search Flickr" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" id="E9s-qC-0d4">
+                            <rect key="frame" x="69" y="7" width="183" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="3x9-V5-DEy" id="ReC-e4-gx1"/>
+                            </connections>
                         </textField>
                         <barButtonItem key="rightBarButtonItem" title="Search" id="YyO-q0-YC4">
                             <connections>
-                                <action selector="onSearchTap:" destination="3x9-V5-DEy" id="XHz-sF-FnX"/>
+                                <action selector="onSearchTap:" destination="3x9-V5-DEy" id="CA0-4k-gZA"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <outlet property="collectionView" destination="EYP-QD-aaz" id="Ajz-Dm-0Ic"/>
-                        <outlet property="searchField" destination="E9s-qC-0d4" id="r3m-sk-uS3"/>
+                        <outlet property="galleryView" destination="DCt-Bg-A8V" id="a90-cz-0qR"/>
+                        <outlet property="searchField" destination="E9s-qC-0d4" id="ggb-1h-1yt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XXP-h3-MJC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2150" y="558"/>
+        </scene>
+        <!--History-->
+        <scene sceneID="lEv-c1-nqf">
+            <objects>
+                <viewControllerPlaceholder storyboardName="History" id="sp6-5b-kgg" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tba-rr-qkg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2479.5" y="479"/>
+        </scene>
+        <!--PhotoDetail-->
+        <scene sceneID="aUG-QH-iNT">
+            <objects>
+                <viewControllerPlaceholder storyboardName="PhotoDetail" id="d2s-Zp-lTB" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VUE-Eb-LOt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2479" y="626"/>
         </scene>
     </scenes>
 </document>

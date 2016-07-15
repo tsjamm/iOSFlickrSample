@@ -8,64 +8,69 @@
 
 import UIKit
 
-class HistoryViewController: BaseViewController {
+protocol HistoryViewControllerDelegate: class {
+    func didTapOnHistoricalSearch(searchTerm: String)
+    func searchHistoryCleared()
+}
 
-    private let reuseIdentifier = "HisCell"
+class HistoryViewController: BaseViewController {
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet var historyView: HistoryView! {
+        didSet {
+            historyView.delegate = self
+            historyView.dataSource = HistoryViewModel(historyList: HistoryManager.getUpdatedHistoryList())
+        }
+    }
+    weak var delegate: HistoryViewControllerDelegate?
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        let transitionAnimator = TranslateAnimator()
+        transitionAnimator.setOriginState(TranslateTransitionDirection.fromLeft)
+        self.transitionAnimator = transitionAnimator
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
         
     }
 
     @IBAction func onClearTap(sender: AnyObject) {
         HistoryManager.clearAllSearchesFromDB()
-        HistoryManager.updateHistoryList()
-        self.tableView.reloadData()
+        self.historyView.dataSource = HistoryViewModel(historyList: HistoryManager.getUpdatedHistoryList())
+        delegate?.searchHistoryCleared()
     }
     
     @IBAction func onEditTap(sender: AnyObject) {
-        if self.tableView.editing {
-            self.tableView.setEditing(false, animated: true)
+        if self.historyView.tableView.editing {
+            self.historyView.tableView.setEditing(false, animated: true)
         } else {
-            self.tableView.setEditing(true, animated: true)
+            self.historyView.tableView.setEditing(true, animated: true)
         }
     }
 }
 
-extension HistoryViewController:UITableViewDelegate {
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        HistoryManager.didSelectRow(indexPath)
-    }
-}
-
-extension HistoryViewController:UITableViewDataSource {
-    
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return HistoryManager.getNumberOfSections()
+extension HistoryViewController: HistoryViewDelegate {
+    func didTapOnCellAtIndexPath(tableView: UITableView, indexPath: NSIndexPath) {
+        if let cell = tableView.cellForRowAtIndexPath(indexPath) {
+            if let searchTerm = cell.textLabel?.text {
+                delegate?.didTapOnHistoricalSearch(searchTerm)
+            }
+        }
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return HistoryManager.getNumberOfRows(section)
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath)
-        cell.textLabel?.text = HistoryManager.getSearchTerm(indexPath)
-        return cell
-    }
-    
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    func commitEditingStyleAtIndexPath(tableView: UITableView, editingStyle: UITableViewCellEditingStyle, indexPath: NSIndexPath) {
         if editingStyle == UITableViewCellEditingStyle.Delete {
             HistoryManager.deleteSearch(indexPath)
-            tableView.reloadData()
+            if HistoryManager.getHistoryCount() == 0 {
+                delegate?.searchHistoryCleared()
+            }
+            self.historyView.dataSource = HistoryViewModel(historyList: HistoryManager.getUpdatedHistoryList())
         }
     }
     
+    func onEdgePan(sender: UIScreenEdgePanGestureRecognizer) {
+        interactivePopForGestureRecognizer(sender)
+    }
 }

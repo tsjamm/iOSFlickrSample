@@ -9,22 +9,38 @@
 import Foundation
 import UIKit
 
-class BaseTransitionAnimator:NSObject, UIViewControllerAnimatedTransitioning {
+//MARK: TransitionType
+enum BaseTransitionType {
+    case present(Duration)
+    case dismiss(Duration)
     
-    var duration:NSTimeInterval = 1
-    var doReverse:Bool = false
-    
-    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
-        return duration
-    }
-    
-    func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
-        if doReverse {
-            doBackwardTransition(transitionContext)
-        } else {
-            doForwardTransition(transitionContext)
+    func transitionDuration() -> NSTimeInterval {
+        switch self {
+        case let .present(duration):
+            return duration.value()
+        case let .dismiss(duration):
+            return duration.value()
         }
     }
+    
+    enum Duration {
+        case custom(NSTimeInterval)
+        case regular
+        
+        func value() -> NSTimeInterval {
+            switch self {
+            case let .custom(duration):
+                return duration
+            case regular:
+                return 0.5
+            }
+        }
+    }
+}
+
+class BaseTransitionAnimator: NSObject {
+    
+    var transitionType = BaseTransitionType.present(.regular)
     
     func doForwardTransition(transitionContext:UIViewControllerContextTransitioning) {
         return
@@ -32,5 +48,21 @@ class BaseTransitionAnimator:NSObject, UIViewControllerAnimatedTransitioning {
     
     func doBackwardTransition(transitionContext:UIViewControllerContextTransitioning) {
         return
+    }
+    
+}
+
+extension BaseTransitionAnimator: UIViewControllerAnimatedTransitioning {
+    func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
+        switch transitionType {
+        case .present:
+            doForwardTransition(transitionContext)
+        case .dismiss:
+            doBackwardTransition(transitionContext)
+        }
+    }
+    
+    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+        return transitionType.transitionDuration()
     }
 }

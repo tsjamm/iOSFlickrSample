@@ -1,5 +1,5 @@
 //
-//  FlickrSectionHeaderView.swift
+//  GallerySectionHeaderView.swift
 //  iOSFlickrSample
 //
 //  Created by Sai Teja Jammalamadaka on 7/5/16.
@@ -9,11 +9,11 @@
 import UIKit
 
 /// The header section for the collection view
-class FlickrSectionHeaderView: UICollectionReusableView {
+class GallerySectionHeaderView: UICollectionReusableView {
     
     @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    //@IBOutlet weak var searchField: UISearchBar!
     
     var isLoading:Bool = false
-    
 }

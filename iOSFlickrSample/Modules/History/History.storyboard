@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="eja-fF-d1e">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -14,7 +14,7 @@
                         <viewControllerLayoutGuide type="top" id="SNW-Fw-U7L"/>
                         <viewControllerLayoutGuide type="bottom" id="6oy-jq-zq6"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="d5q-EU-jcq">
+                    <view key="view" contentMode="scaleToFill" id="d5q-EU-jcq" customClass="HistoryView" customModule="iOSFlickrSample" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -33,7 +33,7 @@
                                                     <rect key="frame" x="15" y="0.0" width="270" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -43,12 +43,17 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="d0T-IN-x1T" secondAttribute="trailing" id="OGd-1O-TgC"/>
                             <constraint firstItem="d0T-IN-x1T" firstAttribute="top" secondItem="d5q-EU-jcq" secondAttribute="top" id="Zru-g5-k64"/>
                             <constraint firstItem="d0T-IN-x1T" firstAttribute="leading" secondItem="d5q-EU-jcq" secondAttribute="leading" id="kTp-n0-Hg2"/>
                             <constraint firstItem="6oy-jq-zq6" firstAttribute="top" secondItem="d0T-IN-x1T" secondAttribute="bottom" id="yFm-Mk-WEn"/>
                         </constraints>
+                        <connections>
+                            <outlet property="tableView" destination="d0T-IN-x1T" id="taY-gb-dhC"/>
+                            <outletCollection property="gestureRecognizers" destination="cV9-yM-0lJ" appends="YES" id="7El-SV-mjV"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" title="Your History" id="thY-sb-B4w">
                         <rightBarButtonItems>
@@ -66,10 +71,16 @@
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <outlet property="tableView" destination="d0T-IN-x1T" id="4sP-Ij-vlh"/>
+                        <outlet property="historyView" destination="d5q-EU-jcq" id="z1n-bY-trh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TNa-2D-OhV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <screenEdgePanGestureRecognizer minimumNumberOfTouches="1" id="cV9-yM-0lJ">
+                    <rectEdge key="edges" right="YES"/>
+                    <connections>
+                        <action selector="onEdgePan:" destination="d5q-EU-jcq" id="Pqx-VX-plw"/>
+                    </connections>
+                </screenEdgePanGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="338" y="474"/>
         </scene>
