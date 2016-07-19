@@ -15,6 +15,7 @@ class FlickrDataManager {
     
     static var flickrReponseMap = [String:FlickrResponse]()
     
+    /// Here the callback is called twice, once for cached if available, and once for network response
     static func fetchFlickerData(searchTerm:String, callback:((FlickrResponse)->())) {
         
         if let cachedResponse = getCachedFlickrResponse(searchTerm) {
@@ -33,6 +34,7 @@ class FlickrDataManager {
         
     }
     
+    /// Returns: FlickrResponse from realm if available
     static func getCachedFlickrResponse(searchTerm:String) -> FlickrResponse? {
         if let cachedResponse = flickrReponseMap[searchTerm] {
             return cachedResponse
@@ -43,7 +45,7 @@ class FlickrDataManager {
         return nil
     }
     
-    
+    /// Clears all flickr data from realm
     static func clearAllFlickrData() {
         flickrReponseMap.removeAll()
         do {

@@ -20,6 +20,14 @@ class PhotoDetailViewController:BaseViewController {
         }
     }
     
+    @IBOutlet var commentsView: CommentView! {
+        didSet {
+            if let fP = self.flickrPhoto {
+                commentsView.dataSource = CommentViewModel(commentList: ["test1","test2"])
+            }
+        }
+    }
+    
     var flickrPhoto:FlickrPhoto? = nil
     
     override func awakeFromNib() {
@@ -51,6 +59,12 @@ class PhotoDetailViewController:BaseViewController {
         super.viewDidDisappear(animated)
     }
 
+    @IBAction func onCommentsButtonTap(sender: AnyObject) {
+        commentsView.show()
+    }
+    @IBAction func onCommentsCloseTap(sender: AnyObject) {
+        commentsView.hide()
+    }
 }
 
 extension PhotoDetailViewController: PhotoDetailViewDelegate {

@@ -22,12 +22,79 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <gestureRecognizers/>
                             </imageView>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="haa-e1-Ic4" userLabel="Comment View" customClass="CommentView" customModule="iOSFlickrSample" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="440" width="320" height="128"/>
+                                <subviews>
+                                    <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8M3-eG-NsU">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="RqU-Y3-kYq"/>
+                                        </constraints>
+                                        <items>
+                                            <navigationItem title="Comments" id="7Il-AF-7kY">
+                                                <barButtonItem key="leftBarButtonItem" systemItem="stop" id="i8j-Fq-fBH">
+                                                    <connections>
+                                                        <action selector="onCommentsCloseTap:" destination="e9O-Yd-kdP" id="NMk-Ni-gFh"/>
+                                                    </connections>
+                                                </barButtonItem>
+                                            </navigationItem>
+                                        </items>
+                                    </navigationBar>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="BlW-VO-DOR">
+                                        <rect key="frame" x="0.0" y="44" width="320" height="84"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <prototypes>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommentCell" textLabel="t7X-t9-7ns" detailTextLabel="w7s-cP-dCK" style="IBUITableViewCellStyleSubtitle" id="g5Q-TF-znU">
+                                                <rect key="frame" x="0.0" y="28" width="320" height="44"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="g5Q-TF-znU" id="Bdg-7g-f8w">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="t7X-t9-7ns">
+                                                            <rect key="frame" x="15" y="6" width="31.5" height="19.5"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="w7s-cP-dCK">
+                                                            <rect key="frame" x="15" y="25.5" width="40.5" height="13.5"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </tableViewCellContentView>
+                                            </tableViewCell>
+                                        </prototypes>
+                                    </tableView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="1AT-MI-aQX"/>
+                                    <constraint firstItem="BlW-VO-DOR" firstAttribute="top" secondItem="8M3-eG-NsU" secondAttribute="bottom" id="39R-db-STT"/>
+                                    <constraint firstItem="8M3-eG-NsU" firstAttribute="top" secondItem="haa-e1-Ic4" secondAttribute="top" id="9BN-4v-LaV"/>
+                                    <constraint firstItem="8M3-eG-NsU" firstAttribute="leading" secondItem="haa-e1-Ic4" secondAttribute="leading" id="Ab0-Yz-d1l"/>
+                                    <constraint firstAttribute="trailing" secondItem="8M3-eG-NsU" secondAttribute="trailing" id="LXb-hO-MKp"/>
+                                    <constraint firstAttribute="trailing" secondItem="BlW-VO-DOR" secondAttribute="trailing" id="Z9d-zg-hcG"/>
+                                    <constraint firstAttribute="bottom" secondItem="BlW-VO-DOR" secondAttribute="bottom" id="kPN-zE-763"/>
+                                    <constraint firstItem="BlW-VO-DOR" firstAttribute="leading" secondItem="haa-e1-Ic4" secondAttribute="leading" id="vWi-l8-ZVu"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="tableView" destination="BlW-VO-DOR" id="Z9D-lc-AkV"/>
+                                </connections>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
+                            <constraint firstItem="haa-e1-Ic4" firstAttribute="leading" secondItem="ZU9-lw-tc8" secondAttribute="leading" id="JaM-q5-Lpk"/>
+                            <constraint firstItem="B1d-DE-pPc" firstAttribute="top" secondItem="haa-e1-Ic4" secondAttribute="bottom" id="W78-qv-Sok"/>
                             <constraint firstItem="WDs-qt-g69" firstAttribute="top" secondItem="ZU9-lw-tc8" secondAttribute="topMargin" id="cWY-B5-RFB"/>
                             <constraint firstAttribute="trailing" secondItem="WDs-qt-g69" secondAttribute="trailing" id="clB-kp-qrs"/>
+                            <constraint firstAttribute="trailing" secondItem="haa-e1-Ic4" secondAttribute="trailing" id="hBx-2h-8G8"/>
                             <constraint firstItem="WDs-qt-g69" firstAttribute="leading" secondItem="ZU9-lw-tc8" secondAttribute="leading" id="p0s-pk-3YI"/>
                             <constraint firstItem="B1d-DE-pPc" firstAttribute="top" secondItem="WDs-qt-g69" secondAttribute="bottom" id="vbD-uc-7k5"/>
                         </constraints>
@@ -37,8 +104,16 @@
                             <outletCollection property="gestureRecognizers" destination="QfE-uB-Fk5" appends="YES" id="bgp-ds-K4S"/>
                         </connections>
                     </view>
+                    <navigationItem key="navigationItem" id="A9T-B4-2j9">
+                        <barButtonItem key="rightBarButtonItem" title="Comments" id="aom-3p-9Z8">
+                            <connections>
+                                <action selector="onCommentsButtonTap:" destination="e9O-Yd-kdP" id="qVQ-UV-Ri4"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="commentsView" destination="haa-e1-Ic4" id="QJk-PM-Q1E"/>
                         <outlet property="photoDetailView" destination="ZU9-lw-tc8" id="uP1-Ux-CRd"/>
                     </connections>
                 </viewController>
