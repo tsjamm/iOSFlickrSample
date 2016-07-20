@@ -12,9 +12,9 @@ class CommentViewModel: CommentViewDataSource {
     
     private let numberOfSections = 1
     private let numberOfRows:Int!
-    private let commentList:[String]
+    private let commentList:[FlickrPhotoComment]
     
-    init(commentList:[String]) {
+    init(commentList:[FlickrPhotoComment]) {
         self.commentList = commentList
         numberOfRows = commentList.count
     }
@@ -28,7 +28,7 @@ class CommentViewModel: CommentViewDataSource {
     }
     
     func configureCellAtIndexPath(tableView: UITableView, cell: UITableViewCell, indexPath: NSIndexPath) {
-        cell.textLabel?.text = commentList[indexPath.row]
-        cell.detailTextLabel?.text = "name"
+        cell.textLabel?.text = commentList[indexPath.row].content
+        cell.detailTextLabel?.text = commentList[indexPath.row].authorname
     }
 }

@@ -23,7 +23,7 @@
                                 <gestureRecognizers/>
                             </imageView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="haa-e1-Ic4" userLabel="Comment View" customClass="CommentView" customModule="iOSFlickrSample" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="440" width="320" height="128"/>
+                                <rect key="frame" x="0.0" y="312" width="320" height="256"/>
                                 <subviews>
                                     <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8M3-eG-NsU">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -41,7 +41,7 @@
                                         </items>
                                     </navigationBar>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="BlW-VO-DOR">
-                                        <rect key="frame" x="0.0" y="44" width="320" height="84"/>
+                                        <rect key="frame" x="0.0" y="44" width="320" height="212"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommentCell" textLabel="t7X-t9-7ns" detailTextLabel="w7s-cP-dCK" style="IBUITableViewCellStyleSubtitle" id="g5Q-TF-znU">
@@ -73,7 +73,7 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="128" id="1AT-MI-aQX"/>
+                                    <constraint firstAttribute="height" constant="256" id="1AT-MI-aQX"/>
                                     <constraint firstItem="BlW-VO-DOR" firstAttribute="top" secondItem="8M3-eG-NsU" secondAttribute="bottom" id="39R-db-STT"/>
                                     <constraint firstItem="8M3-eG-NsU" firstAttribute="top" secondItem="haa-e1-Ic4" secondAttribute="top" id="9BN-4v-LaV"/>
                                     <constraint firstItem="8M3-eG-NsU" firstAttribute="leading" secondItem="haa-e1-Ic4" secondAttribute="leading" id="Ab0-Yz-d1l"/>

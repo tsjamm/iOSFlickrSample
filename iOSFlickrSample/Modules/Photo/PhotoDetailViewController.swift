@@ -23,7 +23,12 @@ class PhotoDetailViewController:BaseViewController {
     @IBOutlet var commentsView: CommentView! {
         didSet {
             if let fP = self.flickrPhoto {
-                commentsView.dataSource = CommentViewModel(commentList: ["test1","test2"])
+                commentsView.dataSource = CommentViewModel(commentList: [])
+                if let fPId = fP.id {
+                    FlickrNetworkManager.fetchFlickrPhotoCommentsFromNetwork(fPId, callback: { (commentList) in
+                        self.commentsView.dataSource = CommentViewModel(commentList: commentList)
+                    })
+                }
             }
         }
     }

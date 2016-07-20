@@ -40,7 +40,23 @@ class FlickrNetworkManager {
             return nil
         }
         let URLString = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=\(Constants.flickrAPIKey)&text=\(escapedTerm)&per_page=\(perPage)&format=json&nojsoncallback=1&page=\(page)"
-        //NSLog("URLString = \(URLString)")
+        return NSURL(string: URLString)
+    }
+    
+    static func fetchFlickrPhotoCommentsFromNetwork(photoId:String, callback:([FlickrPhotoComment])->()) {
+        guard let flickrCommentsURL = FlickrNetworkManager.flickrPhotoCommentsURL(photoId) else {
+            NSLog("Error: Flickr Photo Comments URL not correct.")
+            return
+        }
+        
+        FlickrNetworkManager.getJSONResult(flickrCommentsURL.absoluteString) { (response) in
+            let commentsList = FlickrNetworkManager.processFlickrPhotoCommentsObject(response.result.value)
+            callback(commentsList)
+        }
+    }
+    
+    private static func flickrPhotoCommentsURL(photoId:String) -> NSURL? {
+        let URLString = "https://api.flickr.com/services/rest/?method=flickr.photos.comments.getList&api_key=\(Constants.flickrAPIKey)&photo_id=\(photoId)&format=json&nojsoncallback=1"
         return NSURL(string: URLString)
     }
     
@@ -61,4 +77,27 @@ class FlickrNetworkManager {
         
     }
     
+    private static func processFlickrPhotoCommentsObject(commentsResponseObject:AnyObject?) -> [FlickrPhotoComment] {
+        
+        guard let responseMap = commentsResponseObject as? [String:AnyObject] else {
+            NSLog("Error: Flicker Photo Comments Response Object is not a map...")
+            return []
+        }
+        guard let commentsMap = responseMap["comments"] as? [String:AnyObject] else {
+            NSLog("Error: Flicker Photo Comments Response Data does not have comment map")
+            return []
+        }
+        guard let commentsList = commentsMap["comment"] as? [[String:AnyObject]] else {
+            NSLog("Error: Flicker Photo Comments Response Data does not have comments list in the commment map")
+            return []
+        }
+        
+        var toReturn = [FlickrPhotoComment]()
+        for commentsMap in commentsList {
+            let fPC = FlickrPhotoComment(dataMap: commentsMap)
+            toReturn.append(fPC)
+        }
+        return toReturn
+        
+    }
 }

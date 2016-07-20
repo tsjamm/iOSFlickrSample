@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2C8B9EA16CC836AF05733B8E /* Pods_iOSFlickrSample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0823B63F4D97E3E8B9ED60F /* Pods_iOSFlickrSample.framework */; };
+		88259B301D3F82910043F9B1 /* FlickrPhotoComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88259B2F1D3F82910043F9B1 /* FlickrPhotoComment.swift */; };
 		88309B7B1D2FFD2F00ADF593 /* GalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88309B7A1D2FFD2F00ADF593 /* GalleryView.swift */; };
 		88309B7D1D312A0400ADF593 /* GalleryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88309B7C1D312A0400ADF593 /* GalleryViewModel.swift */; };
 		88309B831D3264B700ADF593 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88309B821D3264B700ADF593 /* HistoryView.swift */; };
@@ -74,6 +75,7 @@
 
 /* Begin PBXFileReference section */
 		4A78DEE9047525370C38D8C2 /* Pods-iOSFlickrSample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSFlickrSample.release.xcconfig"; path = "Pods/Target Support Files/Pods-iOSFlickrSample/Pods-iOSFlickrSample.release.xcconfig"; sourceTree = "<group>"; };
+		88259B2F1D3F82910043F9B1 /* FlickrPhotoComment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FlickrPhotoComment.swift; path = DataModels/FlickrPhotoComment.swift; sourceTree = "<group>"; };
 		88309B7A1D2FFD2F00ADF593 /* GalleryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GalleryView.swift; path = Modules/Gallery/GalleryView.swift; sourceTree = "<group>"; };
 		88309B7C1D312A0400ADF593 /* GalleryViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GalleryViewModel.swift; path = Modules/Gallery/GalleryViewModel.swift; sourceTree = "<group>"; };
 		88309B821D3264B700ADF593 /* HistoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HistoryView.swift; path = Modules/History/HistoryView.swift; sourceTree = "<group>"; };
@@ -273,6 +275,7 @@
 		88D942911D2D31F700924ED3 /* DataModels */ = {
 			isa = PBXGroup;
 			children = (
+				88259B2F1D3F82910043F9B1 /* FlickrPhotoComment.swift */,
 				8850BEDF1D2F860F00465536 /* FlickrPhoto.swift */,
 				8850BEE01D2F860F00465536 /* FlickrResponse.swift */,
 				884C41261D2E966D008E623A /* RealmFlickrPhoto.swift */,
@@ -523,6 +526,7 @@
 				884C41061D2E3CF1008E623A /* PhotoManager.swift in Sources */,
 				884C41271D2E966D008E623A /* RealmFlickrPhoto.swift in Sources */,
 				884C40F41D2E3C9E008E623A /* Constants.swift in Sources */,
+				88259B301D3F82910043F9B1 /* FlickrPhotoComment.swift in Sources */,
 				8850BEE91D2F987700465536 /* HistoryViewController.swift in Sources */,
 				884C41181D2E557D008E623A /* UIViewController+Extension.swift in Sources */,
 				88309B851D32695400ADF593 /* HistoryViewModel.swift in Sources */,
